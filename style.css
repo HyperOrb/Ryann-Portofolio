@@ -98,7 +98,8 @@ body.menu-open .sidebar {
 }
 
 body.menu-open #pageWrapper {
-    transform: translateX(30vw) scale(0.95) rotateY(-5deg); /* Added authentic 3D tilt */
+    transform: translateX(30vw) scale(0.95) rotateY(-5deg);
+    /* Added authentic 3D tilt */
     filter: brightness(0.6);
     pointer-events: none;
 }
@@ -171,14 +172,17 @@ html.lenis {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; /* Align left */
-    padding-left: 10vw; /* Add padding for left alignment gap */
+    align-items: flex-start;
+    /* Align left */
+    padding-left: 10vw;
+    /* Add padding for left alignment gap */
     z-index: 1;
     overflow: hidden;
 }
 
 .nav {
-    position: fixed; /* Keep it always at top relative to screen */
+    position: fixed;
+    /* Keep it always at top relative to screen */
     top: 0;
     left: 0;
     width: 100%;
@@ -187,11 +191,13 @@ html.lenis {
     justify-content: space-between;
     align-items: center;
     z-index: 10000;
-    pointer-events: none; /* Let empty space clicks pass through */
+    pointer-events: none;
+    /* Let empty space clicks pass through */
 }
 
 /* Enable pointer events only on interactive nav elements */
-.nav .logo, .nav .menu-btn {
+.nav .logo,
+.nav .menu-btn {
     pointer-events: auto;
 }
 
@@ -214,23 +220,27 @@ html.lenis {
 }
 
 .hero-content {
-    text-align: left; /* Text aligns left */
+    text-align: left;
+    /* Text aligns left */
     z-index: 2;
-    transform: translateY(10vh); /* Push down slightly if desired */
+    transform: translateY(10vh);
+    /* Push down slightly if desired */
 }
 
 .hero-content h1 {
     font-size: clamp(40px, 8vw, 100px);
     font-weight: 700;
     letter-spacing: -2px;
-    margin-bottom: 5px; /* Tighter gap between title and subtitle */
+    margin-bottom: 5px;
+    /* Tighter gap between title and subtitle */
 }
 
 .hero-subtitle {
     font-size: clamp(24px, 4vw, 50px);
     font-weight: 500;
     color: #a6a6a6;
-    height: 60px; /* Prevent layout shift */
+    height: 60px;
+    /* Prevent layout shift */
 }
 
 .cursor-blink {

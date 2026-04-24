@@ -80,14 +80,14 @@ function typeMainTitle() {
     if (mainIndex < fullMainText.length) {
         let typed = fullMainText.substring(0, mainIndex + 1);
         let htmlStr = "";
-        
+
         if (mainIndex < mainPrefix.length) {
             htmlStr = `<span style="color: #a6a6a6;">${typed}</span>`;
         } else {
             let typedName = typed.substring(mainPrefix.length);
             htmlStr = `<span style="color: #a6a6a6;">${mainPrefix}</span><span style="color: #ffffff;">${typedName}</span>`;
         }
-        
+
         titleElement.innerHTML = htmlStr + '<span class="cursor-blink">|</span>';
         mainIndex++;
         setTimeout(typeMainTitle, 80 + Math.random() * 40);
@@ -142,12 +142,12 @@ gsap.set('.scroll-indicator', { y: 20, opacity: 0 });
 const loadTl = gsap.timeline();
 
 loadTl.to('.nav', { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2 })
-      .to('.hero-bg-waves', { opacity: 0.6, duration: 1.5, ease: 'power2.out' }, '-=0.5')
-      .call(() => {
-          // Start typing after initial layout revealed
-          setTimeout(typeMainTitle, 200);
-      })
-      .to('.scroll-indicator', { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '+=0.5');
+    .to('.hero-bg-waves', { opacity: 0.6, duration: 1.5, ease: 'power2.out' }, '-=0.5')
+    .call(() => {
+        // Start typing after initial layout revealed
+        setTimeout(typeMainTitle, 200);
+    })
+    .to('.scroll-indicator', { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '+=0.5');
 
 
 // --- GSAP Animations ---
