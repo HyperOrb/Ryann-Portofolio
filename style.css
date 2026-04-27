@@ -4,7 +4,12 @@
     --accent-blue: rgba(0, 112, 255, 0.8);
     --text-light: #ffffff;
     --text-dark: #151515;
-    --font-primary: 'Inter', sans-serif;
+    --font-primary: 'Geist', 'Inter', sans-serif;
+    --font-mono: 'Fragment Mono', monospace;
+    --ink: #0d0d0d;
+    --muted: #7b7b7b;
+    --surface: #f6f6f3;
+    --border-soft: rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -350,11 +355,11 @@ html.lenis {
 }
 
 .white-container {
-    background-color: var(--bg-white);
-    color: var(--text-dark);
+    background-color: var(--surface);
+    color: var(--ink);
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
-    padding: 120px 60px;
+    padding: 120px 60px 160px;
     min-height: 100vh;
     position: relative;
     box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
@@ -362,25 +367,238 @@ html.lenis {
     transform: translateY(0);
 }
 
-.intro-text {
-    max-width: 1000px;
-    margin: 0 auto 150px;
+/* New Edwin-inspired layout */
+.section-intro {
+    max-width: 900px;
+    margin: 0 auto 120px;
 }
 
-.intro-text h2 {
-    font-size: clamp(32px, 5vw, 64px);
-    font-weight: 500;
-    line-height: 1.2;
+.section-intro .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+}
+
+.section-intro h2 {
+    font-size: clamp(40px, 7vw, 92px);
+    font-weight: 600;
     letter-spacing: -1px;
+    margin-bottom: 18px;
+    color: var(--ink);
+}
+
+.section-intro .lede {
+    font-size: clamp(18px, 2.4vw, 28px);
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 720px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.section-header h3 {
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.section-count {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.work-section {
+    max-width: 1100px;
+    margin: 0 auto 140px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+
+.work-stack {
+    position: relative;
+    height: 78vh;
+    min-height: 520px;
+    border-radius: 28px;
+    border: 1px solid var(--border-soft);
+    background: #fdfdfb;
+    overflow: hidden;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.12);
+    margin-top: 12px;
+    display: flex;
+    align-items: stretch;
+    perspective: 1600px;
+}
+
+.work-track {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows: repeat(var(--work-count, 3), 100%);
+    will-change: transform;
+}
+
+.work-card {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    transition: opacity 0.3s ease;
+    height: 100%;
+}
+
+.work-card.is-active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.work-card-link {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 28px;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    align-items: center;
+    height: 100%;
+}
+
+.work-card-media {
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #eae9e4 0%, #f6f4ef 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+.work-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.6s ease;
+}
+
+.work-card-link:hover .work-card-media img {
+    transform: scale(1.06);
+}
+
+.work-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding-right: 0;
+    align-items: flex-start;
+}
+
+.work-card-index {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.work-card-title {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.work-card-subtitle {
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.work-card-cta {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-family: var(--font-mono);
+    color: var(--ink);
+}
+
+.work-stack.is-locked {
+    cursor: grabbing;
+}
+
+.about-section {
+    max-width: 1100px;
+    margin: 0 auto 160px;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.about-text {
+    font-size: clamp(20px, 2.6vw, 34px);
+    color: var(--ink);
+    line-height: 1.5;
+}
+
+.about-lists {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.about-list {
+    border-top: 1px solid var(--border-soft);
+    padding-top: 16px;
+}
+
+.list-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 14px;
+}
+
+.about-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+    color: var(--ink);
 }
 
 /* Projects Section */
 .projects {
-    display: flex;
-    flex-direction: column;
-    gap: 150px;
-    max-width: 1200px;
-    margin: 0 auto 100px;
+    display: none;
 }
 
 .project-card {
@@ -443,37 +661,16 @@ html.lenis {
 
 /* Experience Section */
 .experience-section {
-    max-width: 1000px;
-    margin: 150px auto 50px;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 80px;
-}
-
-.experience-section h3 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
-}
-
-.exp-item {
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-    padding: 20px 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.exp-item span:last-child {
-    color: #888;
+    display: none;
 }
 
 /* Footer Section */
 .footer {
     position: relative;
     z-index: 5;
-    background-color: var(--bg-black);
-    color: var(--text-light);
-    padding: 100px 60px 40px;
+    background-color: var(--ink);
+    color: #f7f6f2;
+    padding: 140px 60px 80px;
     /* Slides up from below the white container natively */
 }
 
@@ -486,26 +683,28 @@ html.lenis {
 }
 
 .footer-content h2 {
-    font-size: clamp(40px, 6vw, 80px);
-    font-weight: 700;
-    letter-spacing: -1px;
+    font-size: clamp(40px, 7vw, 96px);
+    font-weight: 600;
+    letter-spacing: -0.5px;
 }
 
 .footer-bottom {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 26px;
 }
 
 .socials {
     display: flex;
-    gap: 30px;
+    gap: 24px;
 }
 
 .socials a {
     color: var(--text-light);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     transition: opacity 0.3s ease;
 }
@@ -519,7 +718,7 @@ html.lenis {
     border: none;
     color: var(--text-light);
     font-family: var(--font-primary);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     transition: opacity 0.3s ease;
 }
@@ -537,6 +736,51 @@ html.lenis {
         padding: 80px 20px;
     }
 
+    .section-intro {
+        margin-bottom: 80px;
+    }
+
+    .work-stack {
+        height: auto;
+        min-height: 0;
+        box-shadow: none;
+    }
+
+    .work-track {
+        position: static;
+        transform: none !important;
+        display: grid;
+        grid-template-rows: none;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .work-card-media {
+        aspect-ratio: 16 / 9;
+    }
+
+    .work-card {
+        padding: 0;
+    }
+
+    .work-card-link {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .work-card-body {
+        padding-right: 0;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .about-lists {
+        grid-template-columns: 1fr;
+    }
+
     .footer {
         padding: 80px 20px 40px;
     }
@@ -544,17 +788,14 @@ html.lenis {
     .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
-        gap: 40px;
+        gap: 24px;
     }
 
     .project-image-wrapper {
         width: 100%;
     }
 
-    .exp-item {
-        flex-direction: column;
-        gap: 10px;
-    }
+
 
     .hero {
         height: 100vh;

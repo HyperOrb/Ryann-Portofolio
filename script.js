@@ -18,13 +18,34 @@ gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.config({ ignoreMobileResize: true });
 
+ScrollTrigger.scrollerProxy(document.body, {
+    scrollTop(value) {
+        if (arguments.length) {
+            lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+    },
+    getBoundingClientRect() {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+    },
+    pinType: document.body.style.transform ? 'transform' : 'fixed'
+});
+
+ScrollTrigger.defaults({ scroller: document.body });
+
 // Update ScrollTrigger on Lenis scroll
 lenis.on('scroll', ScrollTrigger.update);
+
+ScrollTrigger.addEventListener('refresh', () => lenis.update());
 
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000)
 })
 gsap.ticker.lagSmoothing(0);
+
+window.addEventListener('load', () => {
+    ScrollTrigger.refresh();
+});
 
 // --- Custom Cursor Logic ---
 const cursor = document.querySelector('.cursor');
@@ -286,6 +307,99 @@ gsap.from('.intro-text h2', {
     duration: 1,
     ease: "power3.out"
 });
+
+// Selected work stacked flip
+const workSection = document.querySelector('.work-section');
+const workTrack = document.querySelector('.work-track');
+const workCards = workTrack ? Array.from(workTrack.children) : [];
+
+if (workSection && workTrack && workCards.length > 0) {
+    workSection.style.setProperty('--work-count', workCards.length);
+
+    workCards.forEach((card, index) => {
+        gsap.set(card, {
+            rotationX: 16,
+            rotationY: -6,
+            y: 40,
+            scale: 0.96,
+            opacity: 0,
+            transformOrigin: '50% 100%'
+        });
+
+        if (index === 0) {
+            gsap.set(card, {
+                rotationX: 0,
+                rotationY: 0,
+                y: 0,
+                scale: 1,
+                opacity: 1
+            });
+        }
+    });
+
+    ScrollTrigger.matchMedia({
+        '(min-width: 769px)': () => {
+            const steps = Math.max(1, workCards.length - 1);
+            const endDistance = workCards.length * 150;
+            const flipTo = (nextIndex) => {
+                workCards.forEach((card, i) => {
+                    const isActive = i === nextIndex;
+                    const target = isActive
+                        ? { rotationX: 0, rotationY: 0, y: 0, scale: 1, opacity: 1 }
+                        : { rotationX: 16, rotationY: -6, y: 40, scale: 0.96, opacity: 0 };
+                    gsap.to(card, {
+                        ...target,
+                        duration: 0.45,
+                        ease: 'power2.out',
+                        overwrite: true
+                    });
+                });
+            };
+
+            const trackTween = gsap.to(workTrack, {
+                yPercent: -100 * steps,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: workSection,
+                    start: 'top top',
+                    end: () => `+=${endDistance}%`,
+                    pin: true,
+                    pinType: 'transform',
+                    pinSpacing: true,
+                    scrub: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    snap: {
+                        snapTo: 1 / steps,
+                        duration: 0.28,
+                        delay: 0.04,
+                        ease: 'power2.out',
+                        inertia: false
+                    },
+                    onUpdate: (self) => {
+                        const index = Math.round(self.progress * steps);
+                        workCards.forEach((card, i) => {
+                            card.classList.toggle('is-active', i === index);
+                        });
+                        flipTo(index);
+                    },
+                    onRefresh: (self) => {
+                        const index = Math.round(self.progress * steps);
+                        workCards.forEach((card, i) => {
+                            card.classList.toggle('is-active', i === index);
+                        });
+                        flipTo(index);
+                    }
+                }
+            });
+
+            return () => {
+                trackTween.scrollTrigger?.kill();
+                trackTween.kill();
+            };
+        }
+    });
+}
 
 // Back to top
 document.getElementById('backToTop').addEventListener('click', () => {

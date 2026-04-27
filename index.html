@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -80,73 +80,90 @@
         <!-- Content Reveal Section that slides over the hero -->
         <section class="content-reveal" id="content">
             <div class="white-container">
-                <div class="intro-text">
-                    <h2>As an Informatics student, what excites me is bridging the gap between awesome tech and the people who use it. I'm hands-on with programming, but my real superpower is making complex IT concepts easy to grasp!</h2>
-                </div>
+                <section class="section-intro">
+                    <p class="eyebrow">Based in Indonesia · Computer Science</p>
+                    <h2>Sup, I'm Ryann Chandiari.</h2>
+                    <p class="lede">Passionately creating digital experiences rooted in user needs. I love bridging the gap between awesome tech and the people who use it.</p>
+                </section>
 
-                <!-- Project Cards Section -->
-                <div class="projects" id="work">
-
-                    <a href="beautyofbali.html" class="project-card" style="text-decoration: none; color: inherit;">
-                        <div class="project-bg-text" data-speed="0.8">BACKEND</div>
-                        <div class="project-image-wrapper">
-                            <img src="assets/beautyofbali-hero.png" alt="Beauty of Bali" loading="lazy">
-                        </div>
-                        <div class="project-info">
-                            <h3>Beauty of Bali / API Integration</h3>
-                            <p>Backend Development</p>
-                        </div>
-                    </a>
-
-                    <a href="tokopedia.html" class="project-card" style="text-decoration: none; color: inherit;">
-                        <div class="project-bg-text" data-speed="0.5">MACHINE LEARNING</div>
-                        <div class="project-image-wrapper">
-                            <img src="assets/tokopedia_hero_bg.svg" alt="Tokopedia Sentiment Analysis" loading="lazy">
-                        </div>
-                        <div class="project-info">
-                            <h3>Tokopedia Sentiment Analysis</h3>
-                            <p>Machine Learning & NLP</p>
-                        </div>
-                    </a>
-
-                    <a href="cardcast.html" class="project-card" style="text-decoration: none; color: inherit;">
-                        <div class="project-bg-text" data-speed="1.2">GAME DEV</div>
-                        <div class="project-image-wrapper">
-                            <img src="assets/cardcast_cover.png" alt="Card Cast! Game" loading="lazy">
-                        </div>
-                        <div class="project-info">
-                            <h3>Card Cast! / Tower Defense Deckbuilder</h3>
-                            <p>Game Development · Unity · UI/UX · VFX</p>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div class="experience-section">
-                    <h3>Experience & Education</h3>
-                    <div class="exp-list">
-                        <div class="exp-item">
-                            <span>Website Developer @ UMN ECO</span>
-                            <span>Mar 2024 - Nov 2024</span>
-                        </div>
-                        <div class="exp-item">
-                            <span>Public Relation @ HMIF UMN</span>
-                            <span>Nov 2023 - Nov 2024</span>
-                        </div>
-                        <div class="exp-item">
-                            <span>Campus Outreach @ UMN</span>
-                            <span>Oct 2023 - Nov 2024</span>
-                        </div>
-                        <div class="exp-item">
-                            <span>Member of Developer @ PPIFUMN2024</span>
-                            <span>Jan 2024 - Sep 2024</span>
-                        </div>
-                        <div class="exp-item">
-                            <span>Computer Science Student @ UMN</span>
-                            <span>Aug 2023 - Aug 2027</span>
+                <section class="work-section" id="work" style="--work-count: 3;">
+                    <div class="section-header">
+                        <h3>Selected work</h3>
+                        <span class="section-count">(3)</span>
+                    </div>
+                    <div class="work-stack">
+                        <div class="work-track" id="workTrack">
+                            <article class="work-card" data-index="01">
+                                <a href="beautyofbali.html" class="work-card-link" data-hover="Expand">
+                                    <div class="work-card-media">
+                                        <img src="assets/beautyofbali-hero.png" alt="Beauty of Bali project preview">
+                                    </div>
+                                    <div class="work-card-body">
+                                        <span class="work-card-index">01</span>
+                                        <h4 class="work-card-title">Beauty of Bali</h4>
+                                        <p class="work-card-subtitle">API Integration · Backend Development</p>
+                                        <span class="work-card-cta">View project ↗</span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="work-card" data-index="02">
+                                <a href="tokopedia.html" class="work-card-link" data-hover="Expand">
+                                    <div class="work-card-media">
+                                        <img src="assets/tokopedia_hero_bg.svg" alt="Tokopedia Sentiment Analysis project preview">
+                                    </div>
+                                    <div class="work-card-body">
+                                        <span class="work-card-index">02</span>
+                                        <h4 class="work-card-title">Tokopedia Sentiment Analysis</h4>
+                                        <p class="work-card-subtitle">Machine Learning · NLP</p>
+                                        <span class="work-card-cta">View project ↗</span>
+                                    </div>
+                                </a>
+                            </article>
+                            <article class="work-card" data-index="03">
+                                <a href="cardcast.html" class="work-card-link" data-hover="Expand">
+                                    <div class="work-card-media">
+                                        <img src="assets/cardcast_cover.png" alt="Card Cast project preview">
+                                    </div>
+                                    <div class="work-card-body">
+                                        <span class="work-card-index">03</span>
+                                        <h4 class="work-card-title">Card Cast!</h4>
+                                        <p class="work-card-subtitle">Game Dev · Unity · UI/UX · VFX</p>
+                                        <span class="work-card-cta">View project ↗</span>
+                                    </div>
+                                </a>
+                            </article>
                         </div>
                     </div>
-                </div>
+                </section>
+
+                <section class="about-section" id="about">
+                    <div class="section-header">
+                        <h3>About me</h3>
+                        <span class="section-count">(4)</span>
+                    </div>
+                    <div class="about-grid">
+                        <p class="about-text">I love to inspire because I know what it's like to be inspired. Seeing design work and having fun with it, that's what it's all about.</p>
+                        <div class="about-lists">
+                            <div class="about-list">
+                                <span class="list-label">Worked with</span>
+                                <ul>
+                                    <li>UMN ECO</li>
+                                    <li>HMIF UMN</li>
+                                    <li>PPIFUMN2024</li>
+                                </ul>
+                            </div>
+                            <div class="about-list">
+                                <span class="list-label">Focus</span>
+                                <ul>
+                                    <li>UI/UX</li>
+                                    <li>Frontend</li>
+                                    <li>Game Dev</li>
+                                    <li>VFX</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </section>
 
