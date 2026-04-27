@@ -29,16 +29,31 @@ gsap.ticker.lagSmoothing(0);
 // --- Custom Cursor Logic ---
 const cursor = document.querySelector('.cursor');
 const hoverElements = document.querySelectorAll('[data-hover], a, button, .project-image-wrapper');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-document.addEventListener('mousemove', (e) => {
-    // Determine target size
-    gsap.to(cursor, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: "power2.out"
+if (cursor && canHover && !prefersReducedMotion) {
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    const setCursorX = gsap.quickSetter(cursor, 'x', 'px');
+    const setCursorY = gsap.quickSetter(cursor, 'y', 'px');
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
-});
+
+    gsap.ticker.add(() => {
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
+        setCursorX(cursorX);
+        setCursorY(cursorY);
+    });
+} else if (cursor) {
+    cursor.style.display = 'none';
+}
 
 hoverElements.forEach((el) => {
     el.addEventListener('mouseenter', () => {
@@ -165,17 +180,29 @@ gsap.to('.hero-content', {
     ease: "none"
 });
 
-gsap.to('.hero-bg-waves', {
-    scrollTrigger: {
-        trigger: '.content-reveal',
-        start: "top 100%",
-        end: "top 0%",
-        scrub: true
-    },
-    opacity: 0,
-    scale: 0.9,
-    ease: "none"
-});
+gsap.fromTo('.hero-bg-waves',
+    { opacity: 0.6, scale: 1 },
+    {
+        scrollTrigger: {
+            trigger: '.content-reveal',
+            start: "top 100%",
+            end: "top 0%",
+            scrub: true,
+            invalidateOnRefresh: true,
+            onLeaveBack: () => {
+                gsap.to('.hero-bg-waves', {
+                    opacity: 0.6,
+                    scale: 1,
+                    duration: 0.2,
+                    overwrite: true
+                });
+            }
+        },
+        opacity: 0,
+        scale: 0.9,
+        ease: "none"
+    }
+);
 
 // 2. Horizontal Parallax Text inside Project Cards
 const projectCards = document.querySelectorAll('.project-card');
@@ -184,45 +211,67 @@ projectCards.forEach((card) => {
     const bgText = card.querySelector('.project-bg-text');
     const speed = bgText.getAttribute('data-speed') || 1;
 
-    // Animate the text horizontally based on scroll
     gsap.to(bgText, {
         scrollTrigger: {
             trigger: card,
-            start: "top bottom", // when top of card hits bottom of viewport
-            end: "bottom top",   // when bottom of card hits top of viewport
+            start: 'top bottom',
+            end: 'bottom top',
             scrub: true
         },
-        x: () => -window.innerWidth * speed * 0.5, // move left
-        ease: "none"
+        x: () => -window.innerWidth * speed * 0.5,
+        ease: 'none'
     });
 
-    // 3. 3D Tilt Effect on Project Images
+    if (!canHover || prefersReducedMotion) return;
+
     const imgWrapper = card.querySelector('.project-image-wrapper');
+    gsap.set(imgWrapper, { transformPerspective: 1000 });
+    const setRotateX = gsap.quickSetter(imgWrapper, 'rotationX', 'deg');
+    const setRotateY = gsap.quickSetter(imgWrapper, 'rotationY', 'deg');
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isHovering = false;
+    let rafId = null;
+
+    const animateTilt = () => {
+        currentX += (targetX - currentX) * 0.15;
+        currentY += (targetY - currentY) * 0.15;
+        setRotateX(currentX);
+        setRotateY(currentY);
+
+        const isSettled = Math.abs(targetX - currentX) < 0.05 && Math.abs(targetY - currentY) < 0.05;
+        if (isHovering || !isSettled) {
+            rafId = requestAnimationFrame(animateTilt);
+        } else {
+            rafId = null;
+        }
+    };
+
+    card.addEventListener('mouseenter', () => {
+        isHovering = true;
+        if (!rafId) {
+            rafId = requestAnimationFrame(animateTilt);
+        }
+    });
+
     card.addEventListener('mousemove', (e) => {
         const rect = imgWrapper.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-
-        const multiplier = 20; // max rotation in degrees
-        const xRotate = (-y / (rect.height / 2)) * multiplier;
-        const yRotate = (x / (rect.width / 2)) * multiplier;
-
-        gsap.to(imgWrapper, {
-            rotationX: xRotate,
-            rotationY: yRotate,
-            duration: 0.5,
-            ease: "power2.out",
-            transformPerspective: 1000
-        });
+        const multiplier = 20;
+        targetX = (-y / (rect.height / 2)) * multiplier;
+        targetY = (x / (rect.width / 2)) * multiplier;
     });
 
     card.addEventListener('mouseleave', () => {
-        gsap.to(imgWrapper, {
-            rotationX: 0,
-            rotationY: 0,
-            duration: 0.5,
-            ease: "power2.out"
-        });
+        isHovering = false;
+        targetX = 0;
+        targetY = 0;
+        if (!rafId) {
+            rafId = requestAnimationFrame(animateTilt);
+        }
     });
 });
 
