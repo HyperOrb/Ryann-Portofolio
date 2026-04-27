@@ -11,11 +11,7 @@ const lenis = new Lenis({
     infinite: false,
 })
 
-function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-}
-requestAnimationFrame(raf)
+// Native RAF removed to avoid conflict with GSAP ticker
 
 // Sync GSAP with Lenis
 gsap.registerPlugin(ScrollTrigger);
@@ -62,12 +58,11 @@ const mainName = "Ryann Chandiari.";
 const fullMainText = mainPrefix + mainName;
 const subtitlePrefix = "I'm a ";
 const rotatingWords = [
-    "UX designer.",
-    "fashion head.",
+    "Computer Science student.",
+    "software engineer.",
+    "website developer.",
     "tech enthusiast.",
-    "bit nerdy.",
-    "creative.",
-    "traveler."
+    "problem solver."
 ];
 
 let mainIndex = 0;
@@ -130,8 +125,10 @@ function typeSubtitle() {
 }
 
 // --- Page Load & Start Sequence ---
-titleElement.innerHTML = '<span class="cursor-blink">|</span>';
-subtitleElement.innerHTML = '';
+if (titleElement) {
+    titleElement.innerHTML = '<span class="cursor-blink">|</span>';
+    subtitleElement.innerHTML = '';
+}
 
 // Initial states for animation
 gsap.set('.nav', { y: -50, opacity: 0 });
@@ -145,7 +142,7 @@ loadTl.to('.nav', { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.
     .to('.hero-bg-waves', { opacity: 0.6, duration: 1.5, ease: 'power2.out' }, '-=0.5')
     .call(() => {
         // Start typing after initial layout revealed
-        setTimeout(typeMainTitle, 200);
+        if (titleElement) setTimeout(typeMainTitle, 200);
     })
     .to('.scroll-indicator', { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '+=0.5');
 
@@ -265,4 +262,33 @@ menuToggle.addEventListener('click', () => {
         lenis.start(); // Resume scroll
         gsap.to(menuIcon, { rotation: 0, duration: 0.3 });
     }
+});
+
+// --- Smooth Scroll for Sidebar Links ---
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+sidebarLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+        if (targetId && targetId.startsWith('#')) {
+            e.preventDefault();
+
+            // Close the menu if it's open
+            if (isMenuOpen) {
+                menuToggle.click();
+            }
+
+            // Wait for the 0.6s CSS transition on #pageWrapper to finish 
+            // so Lenis can calculate the correct vertical position
+            setTimeout(() => {
+                if (targetId === '#') {
+                    lenis.scrollTo(0, { duration: 1.5 });
+                } else {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        lenis.scrollTo(targetEl, { duration: 1.5, offset: -50 });
+                    }
+                }
+            }, 650);
+        }
+    });
 });

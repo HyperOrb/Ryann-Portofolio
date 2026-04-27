@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Cast! - Ryann Chandiari</title>
+    <meta name="description" content="Card Cast! — A strategic tower defense deckbuilder set in a stylized low-poly forest world. Built with Unity by Ryann Chandiari.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ─── Page-specific overrides ─── */
+        .project-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .project-hero h1 {
+            font-size: clamp(3rem, 6vw, 8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .project-details {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 2.2fr;
+            gap: 60px;
+        }
+        @media (max-width: 768px) {
+            .project-details { grid-template-columns: 1fr; padding: 40px 20px; }
+        }
+        .meta-sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+        .meta-group { margin-bottom: 36px; }
+        .meta-group h4 {
+            color: #a6a6a6;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .meta-group p, .meta-group a {
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-decoration: none;
+            line-height: 1.5;
+        }
+        .meta-group a:hover { color: #a3f7b5; }
+
+        /* Tags */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        .tag {
+            background: rgba(163,247,181,0.12);
+            border: 1px solid rgba(163,247,181,0.3);
+            color: #a3f7b5;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CTA buttons */
+        .cta-row { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+        }
+        .cta-btn.primary {
+            background: #a3f7b5;
+            color: #000;
+        }
+        .cta-btn.primary:hover { background: #7eeea0; transform: translateY(-2px); }
+        .cta-btn.secondary {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .cta-btn.secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 50px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 4px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .back-link:hover { color: #a3f7b5; border-color: #a3f7b5; }
+
+        /* Content sections */
+        .description-group { margin-bottom: 56px; }
+        .description-group h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+        .description-group p {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: #c8c8c8;
+            margin-bottom: 16px;
+        }
+
+        /* Role chips */
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) { .role-grid { grid-template-columns: 1fr; } }
+        .role-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 22px 18px;
+            transition: background 0.25s;
+        }
+        .role-card:hover { background: rgba(163,247,181,0.06); border-color: rgba(163,247,181,0.2); }
+        .role-card .member-name {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a3f7b5;
+            margin-bottom: 6px;
+        }
+        .role-card .member-role { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .role-card ul { list-style: none; padding: 0; margin: 0; }
+        .role-card ul li { font-size: 0.88rem; color: #a6a6a6; padding: 3px 0; }
+        .role-card ul li::before { content: "— "; color: #a3f7b5; }
+
+        /* How-to-play steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) { .steps-grid { grid-template-columns: 1fr; } }
+        .step-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 24px 20px;
+            position: relative;
+            transition: background 0.25s;
+        }
+        .step-card:hover { background: rgba(163,247,181,0.05); }
+        .step-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(163,247,181,0.15);
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            line-height: 1;
+        }
+        .step-card h4 { font-size: 1rem; font-weight: 700; color: #a3f7b5; margin-bottom: 8px; }
+        .step-card p { font-size: 0.9rem; color: #b0b0b0; line-height: 1.6; }
+
+        /* Improvements accordion-style list */
+        .improvement-list { list-style: none; padding: 0; margin: 0; }
+        .improvement-list li {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .improvement-list li:last-child { border-bottom: none; }
+        .imp-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #a3f7b5; }
+        .imp-title { font-size: 1.05rem; font-weight: 600; color: #fff; }
+        .imp-desc { font-size: 0.92rem; color: #a6a6a6; line-height: 1.6; }
+
+        /* Video embed */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 50px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* Main image */
+        .project-image-full {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            object-fit: cover;
+            object-position: center 25%;
+            border-radius: 18px;
+            margin: 0 0 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        /* Divider */
+        .section-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 20px 0 50px;
+        }
+
+        /* Testing table */
+        .test-table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+        .test-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a6a6a6;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .test-table td {
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: #c8c8c8;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            vertical-align: top;
+        }
+        .test-table tr:hover td { background: rgba(255,255,255,0.03); }
+        .status-pass {
+            display: inline-block;
+            background: rgba(163,247,181,0.15);
+            color: #a3f7b5;
+            border-radius: 20px;
+            padding: 2px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Gallery grid */
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+            display: block;
+        }
+        .gallery-image:hover { transform: scale(1.02); }
+
+        /* Pan bg animation */
+        @keyframes panBg {
+            0% { background-position: 0% 50%; transform: scale(1); }
+            100% { background-position: 100% 50%; transform: scale(1.08); }
+        }
+
+        /* Divider label */
+        .section-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #a3f7b5;
+            margin-bottom: 14px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="glowing-border"></div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-links">
+            <a href="index.html" class="sidebar-link" data-hover="Expand">Home</a>
+            <a href="index.html#work" class="sidebar-link" data-hover="Expand">Work</a>
+        </div>
+    </nav>
+
+    <!-- Fixed Nav -->
+    <header class="nav">
+        <div class="menu-btn" data-hover="Expand" id="menuToggle">
+            <svg class="hamburger-icon" id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="8" x2="21" y2="8"></line>
+                <line x1="3" y1="16" x2="21" y2="16"></line>
+            </svg>
+            <span id="menuText">Menu</span>
+        </div>
+        <a href="index.html" style="text-decoration:none; color:inherit;" class="logo" data-hover="Expand">R.C.</a>
+    </header>
+
+    <div class="smooth-scroll-wrapper" id="pageWrapper">
+
+        <!-- Hero Section -->
+        <section class="hero project-hero">
+            <div class="hero-bg-waves" style="
+                background-image: url('assets/cardcast_build.png');
+                background-size: cover;
+                background-position: center top;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0; left: 0;
+                animation: panBg 35s ease-in-out infinite alternate;
+            "></div>
+            <!-- Dark gradient overlay -->
+            <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, #000 100%);z-index:1;"></div>
+
+            <div class="project-hero-content" style="position:relative;z-index:2;text-align:center;">
+                <h1>Card Cast!</h1>
+                <p style="color:#a3f7b5;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;margin-top:16px;">2025 &nbsp;·&nbsp; Game Development &nbsp;·&nbsp; Unity</p>
+            </div>
+
+            <div class="scroll-indicator" style="z-index:2;">
+                <div class="mouse-icon"><div class="wheel"></div></div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="content-reveal">
+            <div class="white-container" style="background-color:#111;color:#fff;min-height:100vh;padding-top:50px;">
+                <div class="project-details">
+
+                    <!-- ── META SIDEBAR ── -->
+                    <div class="meta-sidebar">
+                        <a href="index.html#work" class="back-link" data-hover="Expand">← Back to Projects</a>
+
+                        <div class="meta-group">
+                            <h4>Project Title</h4>
+                            <p>Card Cast!</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Year</h4>
+                            <p>2025</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Role</h4>
+                            <p>UI/UX Designer · Audio &amp; SFX · VFX</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Genre</h4>
+                            <div class="tag-row">
+                                <span class="tag">Tower Defense</span>
+                                <span class="tag">Roguelike</span>
+                                <span class="tag">Deckbuilder</span>
+                                <span class="tag">3D</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Links</h4>
+                            <div class="cta-row">
+                                <a href="https://nax1.itch.io/card-cast-defense" target="_blank" class="cta-btn primary" data-hover="Expand">
+                                    🎮 Play on itch.io
+                                </a>
+                                <a href="https://youtu.be/LukiD9c_pFg" target="_blank" class="cta-btn secondary" data-hover="Expand">
+                                    ▶ Watch Trailer
+                                </a>
+                                <a href="https://drive.google.com/drive/folders/1wo-Ci98t5zMbyvzThzcaEoMsOS8W8CAH" target="_blank" class="cta-btn secondary" data-hover="Expand">
+                                    📂 Google Drive
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── MAIN CONTENT ── -->
+                    <div class="content-main">
+
+                        <!-- Hero image (official cover) -->
+                        <img src="assets/cardcast_cover.png" alt="Card Cast! Official Cover" class="project-image-full">
+
+                        <!-- Description -->
+                        <div class="description-group">
+                            <span class="section-label">Overview</span>
+                            <h3>Strategic Defense, One Card at a Time</h3>
+                            <p>Card Cast! is a strategic tower defense game set in a stylized low-poly forest world. Players must defend their base from "The Horde" by managing a deck of cards that includes defensive structures and magic spells.</p>
+                            <p>Unique to this game are specialized turrets like the "Chess King" — which summons minions — and the "Catapult," as well as active spells like "Fire Ball" and "Freeze." Players must survive waves of enemies, manage their gold economy, and strategically build their fortress to prevent their HP from reaching zero.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- How to Play -->
+                        <div class="description-group">
+                            <span class="section-label">Gameplay</span>
+                            <h3>How to Play</h3>
+                            <div class="steps-grid">
+                                <div class="step-card">
+                                    <span class="step-num">1</span>
+                                    <h4>Draw &amp; Build Phase</h4>
+                                    <p>At the start of each round, draw cards (Chess King, Basic Turret) and place them strategically on the grid.</p>
+                                </div>
+                                <div class="step-card">
+                                    <span class="step-num">2</span>
+                                    <h4>Enemy Wave Phase</h4>
+                                    <p>Enemies spawn and march toward your base. Cast Spell Cards — Fire Ball for damage, Freeze to slow — to support your turrets.</p>
+                                </div>
+                                <div class="step-card">
+                                    <span class="step-num">3</span>
+                                    <h4>Shop Phase</h4>
+                                    <p>Between rounds, spend gold earned from defeated enemies to buy new cards like Missile Launcher or Draw 2 to power up your deck.</p>
+                                </div>
+                                <div class="step-card">
+                                    <span class="step-num">4</span>
+                                    <h4>Objective</h4>
+                                    <p>Survive all rounds and protect your base HP. Destroy every enemy before they breach your fortress. Survive Round 10 to win!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Game Trailer + Gallery -->
+                        <div class="description-group">
+                            <span class="section-label">Media</span>
+                            <h3>Game Trailer</h3>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/LukiD9c_pFg" 
+                                    title="Card Cast! Game Trailer"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+
+                        <!-- Screenshots Gallery -->
+                        <div class="description-group">
+                            <span class="section-label">Screenshots</span>
+                            <h3>In-Game Screenshots</h3>
+                            <div class="project-gallery">
+                                <img src="assets/cardcast_wave.png"
+                                     alt="Enemy Wave Phase — Fire Ball, Freeze &amp; Catapult turrets in action"
+                                     class="gallery-image"
+                                     data-hover="Expand"
+                                     style="grid-column: 1 / -1;">
+                                <img src="assets/cardcast_build.png"
+                                     alt="Draw &amp; Build Phase — placing cards on the grid"
+                                     class="gallery-image"
+                                     data-hover="Expand">
+                                <img src="assets/cardcast_shop.png"
+                                     alt="Shop Phase — buy new cards between rounds"
+                                     class="gallery-image"
+                                     data-hover="Expand">
+                                <img src="assets/cardcast_chess.png"
+                                     alt="Chess King turrets defending the arena"
+                                     class="gallery-image"
+                                     data-hover="Expand">
+                                <img src="assets/cardcast_fireball.png"
+                                     alt="Fire Ball spell exploding on enemies"
+                                     class="gallery-image"
+                                     data-hover="Expand">
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- My Role -->
+                        <div class="description-group">
+                            <span class="section-label">Reflection</span>
+                            <h3>My Role &amp; Contribution</h3>
+                            <p>In Card Cast!, I was primarily responsible for the player-facing experience — everything the player sees and hears beyond the raw gameplay logic. This meant owning the complete UI/UX design, creating all in-game audio and sound effects, and building the visual effects that make each spell and turret feel impactful.</p>
+                            <p>Designing the card UI was a particularly exciting challenge: each card needed to communicate its function at a glance while fitting the game's low-poly fantasy aesthetic. I also worked closely with the developer lead to ensure the audio and VFX responded correctly to in-game events, which required understanding the codebase deeply enough to hook into the audio manager's SFX system.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Team -->
+                        <div class="description-group">
+                            <span class="section-label">Team</span>
+                            <h3>Group Members</h3>
+                            <div class="role-grid">
+                                <div class="role-card">
+                                    <div class="member-name">Nathanael Felix</div>
+                                    <div class="member-role">Developer Lead</div>
+                                    <ul>
+                                        <li>Core game systems</li>
+                                        <li>Architecture &amp; code</li>
+                                        <li>Troubleshooting</li>
+                                    </ul>
+                                </div>
+                                <div class="role-card">
+                                    <div class="member-name">Ryann Chandiari</div>
+                                    <div class="member-role">UI/UX, Audio &amp; VFX</div>
+                                    <ul>
+                                        <li>UI/UX design</li>
+                                        <li>Audio &amp; SFX</li>
+                                        <li>Visual effects</li>
+                                    </ul>
+                                </div>
+                                <div class="role-card">
+                                    <div class="member-name">M. Naufal Aulia</div>
+                                    <div class="member-role">QA &amp; Support</div>
+                                    <ul>
+                                        <li>Game testing</li>
+                                        <li>Main menu code</li>
+                                        <li>Documentation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Key Improvements -->
+                        <div class="description-group">
+                            <span class="section-label">Development</span>
+                            <h3>Key Improvements (UTS → UAS)</h3>
+                            <ul class="improvement-list">
+                                <li>
+                                    <span class="imp-label">Visuals</span>
+                                    <span class="imp-title">Low-Poly 3D Forest Environment</span>
+                                    <span class="imp-desc">Replaced the flat green plane prototype with a fully realized low-poly 3D forest setting with dramatic lighting, dramatically raising the visual bar from the UTS build.</span>
+                                </li>
+                                <li>
+                                    <span class="imp-label">Architecture</span>
+                                    <span class="imp-title">Persistent Audio System (Singleton + DontDestroyOnLoad)</span>
+                                    <span class="imp-desc">Implemented a scene-aware audio manager that seamlessly transitions music between scenes — menus play one theme, battles another — without restarts or interruptions.</span>
+                                </li>
+                                <li>
+                                    <span class="imp-label">Gameplay</span>
+                                    <span class="imp-title">Infinite Wave Loop + Probabilistic Shop</span>
+                                    <span class="imp-desc">Introduced a dynamic round/wave system with RNG-driven shop spawning, giving each run unique pacing and strategic variety.</span>
+                                </li>
+                                <li>
+                                    <span class="imp-label">Content</span>
+                                    <span class="imp-title">Summoner Tower &amp; Spell Phase Lock</span>
+                                    <span class="imp-desc">Added the "Chess King" summoner archetype and enforced strict phase restrictions on spells, deepening tactical decision-making.</span>
+                                </li>
+                                <li>
+                                    <span class="imp-label">Code Quality</span>
+                                    <span class="imp-title">Modular Abstract Effect Classes</span>
+                                    <span class="imp-desc">Refactored card effects using polymorphism and abstract classes, making it trivial to add new effect types without touching the core system.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <!-- Black-box Testing -->
+                        <div class="description-group">
+                            <span class="section-label">QA</span>
+                            <h3>Blackbox Testing Results</h3>
+                            <table class="test-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Category</th>
+                                        <th>Scenario</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>Main Menu</td><td>Click "Play" → Loads Gameplay scene</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>2</td><td>Main Menu</td><td>Click "Controls" → Shows How to Play screen</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>3</td><td>Main Menu</td><td>Click "Quit" → Closes the application</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>4</td><td>Gameplay</td><td>Press W/A/S/D → Camera moves in arena</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>5</td><td>Gameplay</td><td>Drag Tower Card to grid → Turret spawns</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>6</td><td>Gameplay</td><td>Click Spell Card on enemy → Enemy takes damage</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>7</td><td>Gameplay</td><td>Enemy reaches base → Player HP decreases</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>8</td><td>Gameplay</td><td>Destroy enemy → Money increases</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>9</td><td>Gameplay</td><td>Press Esc → Shows "Game Paused" menu</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>10</td><td>Gameplay</td><td>Defeat all enemies in wave → Shop/Reward screen</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>11</td><td>Win/Lose</td><td>HP reaches 0 → Shows "YOU LOSE!" screen</td><td><span class="status-pass">Pass</span></td></tr>
+                                    <tr><td>12</td><td>Win/Lose</td><td>Survive Round 10 → Shows "YOU WIN!" screen</td><td><span class="status-pass">Pass</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div><!-- end content-main -->
+                </div><!-- end project-details -->
+
+                <footer class="footer" style="background-color:#000;">
+                    <div class="footer-content">
+                        <h2>Let's build something great.</h2>
+                        <div class="footer-bottom">
+                            <button class="back-to-top" id="backToTop" data-hover="Expand">Back to top ↑</button>
+                        </div>
+                    </div>
+                </footer>
+
+            </div><!-- end white-container -->
+        </section>
+
+    </div><!-- end smooth-scroll-wrapper -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

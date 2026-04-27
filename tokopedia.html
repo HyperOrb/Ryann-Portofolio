@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokopedia Sentiment Analysis - Ryann Chandiari</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for the project page inspired by Edwin Le's portfolio */
+        .project-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .project-hero h1 {
+            font-size: 6vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .project-details {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 50px;
+        }
+        @media (max-width: 768px) {
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+        }
+        .meta-sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+        .meta-group {
+            margin-bottom: 40px;
+        }
+        .meta-group h4 {
+            color: #a6a6a6;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .meta-group p, .meta-group a {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+        .meta-group a:hover {
+            text-decoration: underline;
+        }
+        .description-group {
+            margin-bottom: 50px;
+        }
+        .description-group h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .description-group p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #d1d1d1;
+            margin-bottom: 20px;
+        }
+        .project-image-full {
+            width: 100%;
+            border-radius: 20px;
+            margin: 20px 0 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-block;
+            margin: 0 0 50px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ffffff;
+            padding-bottom: 5px;
+        }
+        .back-link:hover {
+            color: #a6a6a6;
+            border-color: #a6a6a6;
+        }
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+            margin-bottom: 50px;
+        }
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
+            background-color: #ffffff; /* Ensures notebook charts are readable */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+        .gallery-image:hover {
+            transform: scale(1.02);
+        }
+        @keyframes panBg {
+            0% {
+                background-position: 0% 50%;
+                transform: scale(1);
+            }
+            100% {
+                background-position: 100% 50%;
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="glowing-border"></div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-links">
+            <a href="index.html" class="sidebar-link" data-hover="Expand">Home</a>
+            <a href="index.html#work" class="sidebar-link" data-hover="Expand">Work</a>
+        </div>
+    </nav>
+
+    <!-- FIXED GLOBAL NAV -->
+    <header class="nav">
+        <div class="menu-btn" data-hover="Expand" id="menuToggle">
+            <svg class="hamburger-icon" id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="8" x2="21" y2="8"></line>
+                <line x1="3" y1="16" x2="21" y2="16"></line>
+            </svg>
+            <span id="menuText">Menu</span>
+        </div>
+        <a href="index.html" style="text-decoration:none; color:inherit;" class="logo" data-hover="Expand">R.C.</a>
+    </header>
+
+    <div class="smooth-scroll-wrapper" id="pageWrapper">
+        <section class="hero project-hero">
+            <!-- Colorful animated background -->
+            <div class="hero-bg-waves" style="background-image: url('assets/tokopedia_hero_bg.svg'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 100%; position: absolute; top: 0; left: 0; animation: panBg 40s ease-in-out infinite alternate;"></div>
+            <!-- Overlay to blend with the rest of the dark site -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 0%, #000 100%); z-index: 1;"></div>
+
+            <div class="project-hero-content" style="position: relative; z-index: 2;">
+                <h1>Tokopedia AI</h1>
+                <p style="text-align: center; color: #a6a6a6; font-size: 1.5rem; margin-top: 20px;">2024 • Machine Learning</p>
+            </div>
+
+            <div class="scroll-indicator" style="z-index: 2;">
+                <div class="mouse-icon">
+                    <div class="wheel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-reveal" style="transform: none; padding-top: 0;">
+            <div class="white-container" style="background-color: #111; color: #fff; min-height: 100vh; padding-top: 50px;">
+                <div class="project-details">
+                    <div class="meta-sidebar">
+                        <a href="index.html#work" class="back-link" data-hover="Expand">← Back to Projects</a>
+                        
+                        <div class="meta-group">
+                            <h4>Project Title</h4>
+                            <p>Tokopedia Sentiment Analysis SVM</p>
+                        </div>
+                        
+                        <div class="meta-group">
+                            <h4>Year Accomplished</h4>
+                            <p>2024</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Role/Position</h4>
+                            <p>Data Scientist / ML Engineer</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Repository</h4>
+                            <a href="https://github.com/HyperOrb/Tokopedia-Sentiment-Analysis-SVM" target="_blank" data-hover="Expand">View on GitHub</a>
+                        </div>
+                    </div>
+
+                    <div class="content-main">
+                        <div class="description-group">
+                            <h3>Project Description</h3>
+                            <p>This project classifies Tokopedia product reviews into Positive, Neutral, or Negative sentiment using a Support Vector Machine (SVM) algorithm, achieving an impressive 95% accuracy. Built with Python and Jupyter Notebooks, the project implements an Explainable AI (XAI) approach to provide transparency in the model's predictions.</p>
+                            <p>The system was trained on 500 reviews across 5 different product categories (Fashion, Electronics, Food, etc.), proving its robustness and versatility in real-world e-commerce scenarios.</p>
+                        </div>
+
+                        <div class="description-group">
+                            <h3>Notes & Reflection</h3>
+                            <p>One of the most fascinating parts of this project was applying Explainable AI. Instead of treating the SVM as a "black box", I analyzed the coefficients of the Linear Kernel to see exactly which keywords influenced the sentiment classification the most. It was incredibly rewarding to visualize how the model "thinks".</p>
+                            <p>I also faced challenges with imbalanced data, which I tackled using Data Augmentation (Synonym Replacement and Random Insertion/Deletion) and resampling techniques. Adding behavioral feature engineering—like analyzing the intensity of punctuation (! or ?)—helped the model capture human emotion far better than standard text alone. This project significantly deepened my understanding of natural language processing and model interpretability.</p>
+                        </div>
+
+                        <div class="description-group">
+                            <h3>Model Performance & Data Progression</h3>
+                            <p>To ensure the most accurate sentiment classification, the model underwent multiple iterations of enhancement, ultimately achieving a peak accuracy of <strong>96.22%</strong>.</p>
+                            <ul style="color: #d1d1d1; font-size: 1.2rem; line-height: 1.6; margin-bottom: 20px; margin-left: 20px;">
+                                <li><strong>Baseline (TF-IDF Only):</strong> 63.78%</li>
+                                <li><strong>TF-IDF + Custom Features:</strong> 64.14%</li>
+                                <li><strong>TF-IDF + Features + Data Augmentation:</strong> 85.71%</li>
+                                <li><strong>Fine-Tuned Model (Grid Search):</strong> 96.22%</li>
+                            </ul>
+                            <p>This massive +49.44% improvement from the baseline proves the effectiveness of robust data augmentation and precise hyperparameter tuning.</p>
+                        </div>
+
+                        <img src="assets/tokopedia_hero_bg.svg" alt="Tokopedia Sentiment Analysis Visualization" class="project-image-full" data-hover="Expand">
+
+                        <div class="description-group" style="margin-top: 50px;">
+                            <h3>Data Visualizations & Metrics</h3>
+                            <p>Below are the exported analysis graphs from the Jupyter Notebook detailing the data distributions, confusion matrices, and the progressive performance improvements.</p>
+                        </div>
+
+                        <div class="project-gallery">
+                            <img src="assets/tokopedia_graph_1.png" alt="Graph 1" class="gallery-image" data-hover="Expand">
+                            <img src="assets/tokopedia_graph_2.png" alt="Graph 2" class="gallery-image" data-hover="Expand">
+                            <img src="assets/tokopedia_graph_3.png" alt="Graph 3" class="gallery-image" data-hover="Expand">
+                            <img src="assets/tokopedia_graph_4.png" alt="Graph 4" class="gallery-image" data-hover="Expand">
+                            <img src="assets/tokopedia_graph_5.png" alt="Graph 5" class="gallery-image" data-hover="Expand" style="grid-column: 1 / -1; width: 100%;">
+                            <img src="assets/tokopedia_graph_6.png" alt="Graph 6" class="gallery-image" data-hover="Expand" style="grid-column: 1 / -1; width: 100%;">
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="footer" style="background-color: #000;">
+                    <div class="footer-content">
+                        <h2>Let's build something great.</h2>
+                        <div class="footer-bottom">
+                            <button class="back-to-top" id="backToTop" data-hover="Expand">Back to top ↑</button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
