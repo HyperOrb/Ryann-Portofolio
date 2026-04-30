@@ -2,3 +2,4 @@
 .agents/
 graphify-out/
 node_modules/
+**/APK/
