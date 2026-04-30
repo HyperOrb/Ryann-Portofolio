@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
     <style>
         /* Specific styles for the project page inspired by Edwin Le's portfolio */
         .project-hero {
@@ -17,6 +20,7 @@
             justify-content: center;
             padding: 0;
         }
+
         .project-hero h1 {
             font-size: 6vw;
             font-weight: 900;
@@ -25,6 +29,7 @@
             color: #ffffff;
             text-align: center;
         }
+
         .project-details {
             max-width: 1200px;
             margin: 0 auto;
@@ -33,19 +38,23 @@
             grid-template-columns: 1fr 2fr;
             gap: 50px;
         }
+
         @media (max-width: 768px) {
             .project-details {
                 grid-template-columns: 1fr;
             }
         }
+
         .meta-sidebar {
             position: sticky;
             top: 100px;
             align-self: start;
         }
+
         .meta-group {
             margin-bottom: 40px;
         }
+
         .meta-group h4 {
             color: #a6a6a6;
             font-size: 0.9rem;
@@ -53,35 +62,43 @@
             letter-spacing: 1px;
             margin-bottom: 10px;
         }
-        .meta-group p, .meta-group a {
+
+        .meta-group p,
+        .meta-group a {
             font-size: 1.2rem;
             color: #ffffff;
             text-decoration: none;
             line-height: 1.4;
         }
+
         .meta-group a:hover {
             text-decoration: underline;
         }
+
         .description-group {
             margin-bottom: 50px;
         }
+
         .description-group h3 {
             font-size: 2rem;
             margin-bottom: 20px;
             color: #ffffff;
         }
+
         .description-group p {
             font-size: 1.2rem;
             line-height: 1.6;
             color: #d1d1d1;
             margin-bottom: 20px;
         }
+
         .project-image-full {
             width: 100%;
             border-radius: 20px;
             margin: 20px 0 50px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
+
         .back-link {
             display: inline-block;
             margin: 0 0 50px;
@@ -91,32 +108,38 @@
             border-bottom: 1px solid #ffffff;
             padding-bottom: 5px;
         }
+
         .back-link:hover {
             color: #a6a6a6;
             border-color: #a6a6a6;
         }
+
         .project-gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             margin-bottom: 50px;
         }
+
         .gallery-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease;
         }
+
         .gallery-image:hover {
             transform: scale(1.02);
         }
+
         @keyframes panBg {
             0% {
                 background-position: 0% 50%;
                 transform: scale(1);
             }
+
             100% {
                 background-position: 100% 50%;
                 transform: scale(1.1);
@@ -124,6 +147,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Custom Cursor -->
     <div class="cursor"></div>
@@ -153,13 +177,18 @@
     <div class="smooth-scroll-wrapper" id="pageWrapper">
         <section class="hero project-hero">
             <!-- Colorful animated background -->
-            <div class="hero-bg-waves" style="background-image: url('assets/bali_hero_bg.png'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 100%; position: absolute; top: 0; left: 0; animation: panBg 40s ease-in-out infinite alternate;"></div>
+            <div class="hero-bg-waves"
+                style="background-image: url('assets/bali_hero_bg.png'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 100%; position: absolute; top: 0; left: 0; animation: panBg 40s ease-in-out infinite alternate;">
+            </div>
             <!-- Overlay to blend with the rest of the dark site -->
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 0%, #000 100%); z-index: 1;"></div>
+            <div
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 0%, #000 100%); z-index: 1;">
+            </div>
 
             <div class="project-hero-content" style="position: relative; z-index: 2;">
                 <h1>Beauty of Bali</h1>
-                <p style="text-align: center; color: #a6a6a6; font-size: 1.5rem; margin-top: 20px;">2024 • Backend Development</p>
+                <p style="text-align: center; color: #a6a6a6; font-size: 1.5rem; margin-top: 20px;">2024 • Backend
+                    Development</p>
             </div>
 
             <div class="scroll-indicator" style="z-index: 2;">
@@ -170,16 +199,17 @@
         </section>
 
         <section class="content-reveal">
-            <div class="white-container" style="background-color: #111; color: #fff; min-height: 100vh; padding-top: 50px;">
+            <div class="white-container"
+                style="background-color: #111; color: #fff; min-height: 100vh; padding-top: 50px;">
                 <div class="project-details">
                     <div class="meta-sidebar">
                         <a href="index.html#work" class="back-link" data-hover="Expand">← Back to Projects</a>
-                        
+
                         <div class="meta-group">
                             <h4>Project Title</h4>
                             <p>Beauty of Bali</p>
                         </div>
-                        
+
                         <div class="meta-group">
                             <h4>Year Accomplished</h4>
                             <p>2024</p>
@@ -192,40 +222,64 @@
 
                         <div class="meta-group">
                             <h4>Publication Link</h4>
-                            <a href="https://beautyofbali.vercel.app" target="_blank" data-hover="Expand">beautyofbali.vercel.app</a>
+                            <a href="https://beautyofbali.vercel.app" target="_blank"
+                                data-hover="Expand">beautyofbali.vercel.app</a>
                         </div>
                     </div>
 
                     <div class="content-main">
                         <div class="description-group">
                             <h3>Project Description</h3>
-                            <p>For our 2nd semester final group project, Beauty of Bali, I worked on backend development and handled all the API integrations. The website is meant to be an interactive way to explore Balinese culture and nature, with sections about museums, beaches, and local food. The frontend was built using React and Vite, with HTML, CSS, JSX, and Tailwind CSS.</p>
+                            <p>For our 2nd semester final group project, Beauty of Bali, I worked on backend development
+                                and handled all the API integrations. The website is meant to be an interactive way to
+                                explore Balinese culture and nature, with sections about museums, beaches, and local
+                                food. The frontend was built using React and Vite, with HTML, CSS, JSX, and Tailwind
+                                CSS.</p>
                         </div>
 
                         <div class="description-group">
                             <h3>Notes & Reflection</h3>
-                            <p>One thing I'm really proud of is my idea to add small games to the site. I noticed that a lot of educational websites don't have enough interaction, which can make them kind of boring and easy to lose interest in. I thought adding games would help users engage more and learn in a fun way, and from the feedback we got, it really did keep people interested and involved! We also ended up getting the 'Most Fun Website' award too!</p>
-                            <p>Working on this project helped me improve my backend skills and gave me a better understanding of how to connect APIs with the frontend. It also significantly improved my teamwork and collaboration skills. I really enjoyed the way my team worked together, I could share what I knew to help with tasks, and other times I got to learn new things and hear different perspectives from my teammates. It made me realize how much I enjoy building things with others and how important collaboration is in any project.</p>
+                            <p>One thing I'm really proud of is my idea to add small games to the site. I noticed that a
+                                lot of educational websites don't have enough interaction, which can make them kind of
+                                boring and easy to lose interest in. I thought adding games would help users engage more
+                                and learn in a fun way, and from the feedback we got, it really did keep people
+                                interested and involved! We also ended up getting the 'Most Fun Website' award too!</p>
+                            <p>Working on this project helped me improve my backend skills and gave me a better
+                                understanding of how to connect APIs with the frontend. It also significantly improved
+                                my teamwork and collaboration skills. I really enjoyed the way my team worked together,
+                                I could share what I knew to help with tasks, and other times I got to learn new things
+                                and hear different perspectives from my teammates. It made me realize how much I enjoy
+                                building things with others and how important collaboration is in any project.</p>
                         </div>
 
                         <div class="project-gallery">
                             <!-- Main Hero Image -->
-                            <img src="assets/beautyofbali-hero.png" alt="Beauty of Bali Screenshot" class="project-image-full" data-hover="Expand" style="grid-column: 1 / -1; margin-top: 0;">
-                            
+                            <img src="assets/beautyofbali-hero.png" alt="Beauty of Bali Screenshot"
+                                class="project-image-full" data-hover="Expand"
+                                style="grid-column: 1 / -1; margin-top: 0;">
+
                             <!-- New Gallery Images -->
                             <img src="assets/map.png" alt="Interactive Map" class="gallery-image" data-hover="Expand">
-                            <img src="assets/restaurant.png" alt="Bondi Restaurant" class="gallery-image" data-hover="Expand">
+                            <img src="assets/restaurant.png" alt="Bondi Restaurant" class="gallery-image"
+                                data-hover="Expand">
                             <img src="assets/food.png" alt="Balinese Food" class="gallery-image" data-hover="Expand">
                             <img src="assets/museum.png" alt="Museum of Bali" class="gallery-image" data-hover="Expand">
-                            <img src="assets/beach.png" alt="Pantai Bali" class="gallery-image" data-hover="Expand" style="grid-column: 1 / -1;">
+                            <img src="assets/beach.png" alt="Pantai Bali" class="gallery-image" data-hover="Expand"
+                                style="grid-column: 1 / -1;">
                         </div>
                     </div>
                 </div>
 
-                <footer class="footer" style="background-color: #000;">
+                <footer class="footer" style="background-color:#0d0d0d;">
                     <div class="footer-content">
                         <h2>Let's build something great.</h2>
                         <div class="footer-bottom">
+                            <div class="socials">
+                                <a href="https://www.linkedin.com/in/rynnchan" target="_blank"
+                                    data-hover="Expand">LinkedIn</a>
+                                <a href="https://www.instagram.com/rynnchn_/" target="_blank"
+                                    data-hover="Expand">Instagram</a>
+                            </div>
                             <button class="back-to-top" id="backToTop" data-hover="Expand">Back to top ↑</button>
                         </div>
                     </div>
@@ -240,4 +294,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

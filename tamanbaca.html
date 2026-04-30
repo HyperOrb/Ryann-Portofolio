@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PojokBaca - Ryann Chandiari</title>
+    <meta name="description" content="PojokBaca — A digital library application featuring real-time sentiment analysis. Built with Kotlin, Jetpack Compose, and Firebase.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ─── Page-specific overrides ─── */
+        .project-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .project-hero h1 {
+            font-size: clamp(3rem, 6vw, 8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .project-details {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 2.2fr;
+            gap: 60px;
+        }
+        @media (max-width: 768px) {
+            .project-details { grid-template-columns: 1fr; padding: 40px 20px; }
+        }
+        .meta-sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+        .meta-group { margin-bottom: 36px; }
+        .meta-group h4 {
+            color: #a6a6a6;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .meta-group p, .meta-group a {
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-decoration: none;
+            line-height: 1.5;
+        }
+        .meta-group a:hover { color: #a3f7b5; }
+
+        /* Tags */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        .tag {
+            background: rgba(163,247,181,0.12);
+            border: 1px solid rgba(163,247,181,0.3);
+            color: #a3f7b5;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 50px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 4px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .back-link:hover { color: #a3f7b5; border-color: #a3f7b5; }
+
+        /* Content sections */
+        .description-group { margin-bottom: 56px; }
+        .description-group h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+        .description-group p {
+            font-size: 1.1rem;
+            line-height: 1.75;
+            color: #c8c8c8;
+            margin-bottom: 16px;
+        }
+
+        /* Role chips */
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) { .role-grid { grid-template-columns: 1fr; } }
+        .role-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 22px 18px;
+            transition: background 0.25s;
+        }
+        .role-card:hover { background: rgba(163,247,181,0.06); border-color: rgba(163,247,181,0.2); }
+        .role-card .member-name {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a3f7b5;
+            margin-bottom: 6px;
+        }
+        .role-card .member-role { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .role-card ul { list-style: none; padding: 0; margin: 0; }
+        .role-card ul li { font-size: 0.88rem; color: #a6a6a6; padding: 3px 0; }
+        .role-card ul li::before { content: "— "; color: #a3f7b5; }
+
+        /* Tech stack chips */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .tech-card {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid #a3f7b5;
+            padding: 12px 16px;
+            border-radius: 4px 10px 10px 4px;
+        }
+        .tech-card span { font-weight: 700; color: #fff; font-size: 0.95rem; }
+        .tech-card p { font-size: 0.82rem; color: #a6a6a6; margin-top: 4px; }
+
+        /* Main image */
+        .project-image-full {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            object-fit: cover;
+            border-radius: 18px;
+            margin: 0 0 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        /* Divider */
+        .section-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 20px 0 50px;
+        }
+
+        @keyframes panBg {
+            0% { background-position: 0% 50%; transform: scale(1); }
+            100% { background-position: 100% 50%; transform: scale(1.08); }
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #a3f7b5;
+            margin-bottom: 14px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="glowing-border"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-links">
+            <a href="index.html" class="sidebar-link" data-hover="Expand">Home</a>
+            <a href="index.html#work" class="sidebar-link" data-hover="Expand">Work</a>
+        </div>
+    </nav>
+
+    <header class="nav">
+        <div class="menu-btn" data-hover="Expand" id="menuToggle">
+            <svg class="hamburger-icon" id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="8" x2="21" y2="8"></line>
+                <line x1="3" y1="16" x2="21" y2="16"></line>
+            </svg>
+            <span id="menuText">Menu</span>
+        </div>
+        <a href="index.html" class="logo" data-hover="Expand">R.C.</a>
+    </header>
+
+    <div class="smooth-scroll-wrapper" id="pageWrapper">
+        <section class="hero project-hero">
+            <div class="hero-bg-waves" style="
+                background-image: url('assets/tamanbacaan_hero.png');
+                background-size: cover;
+                background-position: center;
+                width: 100%; height: 100%;
+                position: absolute;
+                top: 0; left: 0;
+                animation: panBg 35s ease-in-out infinite alternate;
+            "></div>
+            <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, #000 100%);z-index:1;"></div>
+            <div class="project-hero-content" style="position:relative;z-index:2;text-align:center;">
+                <h1>PojokBaca</h1>
+                <p style="color:#a3f7b5;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;margin-top:16px;">2025 &nbsp;·&nbsp; Android Dev &nbsp;·&nbsp; Machine Learning</p>
+            </div>
+            <div class="scroll-indicator" style="z-index:2;">
+                <div class="mouse-icon"><div class="wheel"></div></div>
+            </div>
+        </section>
+
+        <section class="content-reveal">
+            <div class="white-container" style="background-color:#111;color:#fff;min-height:100vh;padding-top:50px;">
+                <div class="project-details">
+                    <div class="meta-sidebar">
+                        <a href="index.html#work" class="back-link" data-hover="Expand">← Back to Projects</a>
+                        <div class="meta-group">
+                            <h4>Role</h4>
+                            <p>Lead Android Developer · ML Engineer</p>
+                        </div>
+                        <div class="meta-group">
+                            <h4>Tech Stack</h4>
+                            <div class="tag-row">
+                                <span class="tag">Kotlin</span>
+                                <span class="tag">Jetpack Compose</span>
+                                <span class="tag">Firebase</span>
+                                <span class="tag">TensorFlow Lite</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-main">
+                        <img src="assets/tamanbacaan_hero.png" alt="PojokBaca App Preview" class="project-image-full">
+
+                        <div class="description-group">
+                            <span class="section-label">Overview</span>
+                            <h3>Digital Library with a Smart Heart</h3>
+                            <p>PojokBaca (Taman Bacaan) is a comprehensive digital library application designed to modernize the reading experience. While it handles core library functions like book discovery, borrowing, and user management, its standout feature is a built-in sentiment analysis engine for book reviews.</p>
+                            <p>Built with a modern Android stack, the app leverages Firebase for real-time data persistence and authentication, ensuring a seamless experience across devices. The goal was to create not just a repository for books, but a community-driven platform where readers can share and understand the collective sentiment of the library's catalog.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Key Features</span>
+                            <h3>Comprehensive Library Management</h3>
+                            <div class="tech-grid">
+                                <div class="tech-card">
+                                    <span>One-Click Borrowing</span>
+                                    <p>Simplified UX allows users to borrow books instantly after authentication.</p>
+                                </div>
+                                <div class="tech-card">
+                                    <span>Proactive Notifications</span>
+                                    <p>Automated reminders 3 days before due dates to ensure high return rates.</p>
+                                </div>
+                                <div class="tech-card">
+                                    <span>Barcode Scanner</span>
+                                    <p>Admins can add new inventory instantly by scanning ISBN barcodes.</p>
+                                </div>
+                                <div class="tech-card">
+                                    <span>Multi-Level Access</span>
+                                    <p>Tailored interfaces for Users, Admins, and Super Admins.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">The Core Engine</span>
+                            <h3>Real-Time Sentiment Analysis</h3>
+                            <p>I engineered a custom keyword-based sentiment classification engine that runs entirely on-device. As users type their reviews, the system provides instantaneous feedback, categorizing their sentiment as Positive, Neutral, or Negative with a calculated confidence score.</p>
+                            <img src="assets/tamanbaca_analytics.png" alt="Sentiment Analytics Dashboard" class="project-image-full" style="margin-top: 20px;">
+                            <div class="tech-grid">
+                                <div class="tech-card">
+                                    <span>Real-Time Feedback</span>
+                                    <p>Latency under 10ms for immediate UI response.</p>
+                                </div>
+                                <div class="tech-card">
+                                    <span>Hybrid Storage</span>
+                                    <p>Firestore integration for persistent, global sentiment stats.</p>
+                                </div>
+                                <div class="tech-card">
+                                    <span>Jetpack Compose UI</span>
+                                    <p>Declarative UI components for dynamic sentiment badges.</p>
+                                </div>
+                                <div class="tech-card">
+                                    <span>Scalable Architecture</span>
+                                    <p>Modular design ready for TensorFlow Lite custom models.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">UI Showcase</span>
+                            <h3>App Screenshots</h3>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                <img src="assets/tamanbaca_home.png" alt="Home Dashboard" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                                <img src="assets/tamanbaca_catalog.png" alt="Book Catalog" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                                <img src="assets/tamanbaca_review.png" alt="Review System" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                                <img src="assets/tamanbaca_splash.png" alt="Splash Screen" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Reflection</span>
+                            <h3>My Role & Contribution</h3>
+                            <p>As the Lead Android Developer and ML Engineer, I was responsible for the entire technical implementation of the PojokBaca application. My primary contribution was the design and development of the Sentiment Analysis Engine and the Review Management System.</p>
+                            <p>I focused on creating a highly responsive user interface using Jetpack Compose, ensuring that the machine learning components felt like a natural, invisible part of the user experience. Leading the development phase meant coordinating the database schema in Firestore with the frontend state management, resulting in a production-ready application that balanced performance with intelligent features.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Team</span>
+                            <h3>Group Members</h3>
+                            <div class="role-grid">
+                                <div class="role-card">
+                                    <div class="member-name">Ryann Chandiari</div>
+                                    <div class="member-role">Lead Android Developer &amp; ML Engineer</div>
+                                    <ul>
+                                        <li>Sentiment Analysis Engine</li>
+                                        <li>Core Android Architecture</li>
+                                        <li>UI/UX Implementation</li>
+                                    </ul>
+                                </div>
+                                <div class="role-card">
+                                    <div class="member-name">Aditya Stephen Hung</div>
+                                    <div class="member-role">Frontend &amp; Integration</div>
+                                    <ul>
+                                        <li>UI Components</li>
+                                        <li>Navigation Flow</li>
+                                        <li>Asset Management</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="footer" style="background-color:#0d0d0d;">
+                    <div class="footer-content">
+                        <h2>Let's build something great.</h2>
+                        <div class="footer-bottom">
+                            <div class="socials">
+                                <a href="https://www.linkedin.com/in/rynnchan" target="_blank" data-hover="Expand">LinkedIn</a>
+                                <a href="https://www.instagram.com/rynnchn_/" target="_blank" data-hover="Expand">Instagram</a>
+                            </div>
+                            <button class="back-to-top" id="backToTop" data-hover="Expand">Back to top ↑</button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

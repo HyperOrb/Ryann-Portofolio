@@ -1,0 +1,27 @@
+POJOKBACA - APLIKASI PERPUSTAKAAN DIGITAL
+
+GROUP MEMBERS
+1. Aditya Stephen Hung - 00000072563
+2. Imanuell Gilland - 00000066420
+3. Inosensius Dwi Atmoko - 00000067501
+4. Ryann Chandiari - 00000092718
+
+LOGIN CREDENTIALS
+
+User Account
+Email    : user@gmail.com
+Password : user123
+
+Admin Account
+Email    : superadmin@gmail.com
+Password : admin123
+
+SPECIAL INSTRUCTIONS
+- Aplikasi dikembangkan menggunakan Android Studio dengan bahasa Kotlin dan Jetpack Compose.
+- Backend menggunakan Firebase Authentication dan Firebase Firestore.
+- Pastikan perangkat memiliki koneksi internet saat menjalankan aplikasi.
+- Invite code yang valid untuk registrasi:
+  * FANTA1
+  * COLA2
+  * BEER3
+- Penguji dapat langsung login menggunakan akun dummy tanpa perlu melakukan registrasi.

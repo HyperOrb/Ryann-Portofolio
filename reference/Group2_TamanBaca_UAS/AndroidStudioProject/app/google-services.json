@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "418567189779",
+    "firebase_url": "https://tamanbacaanapp-default-rtdb.firebaseio.com",
+    "project_id": "tamanbacaanapp",
+    "storage_bucket": "tamanbacaanapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418567189779:android:7c0210f062fc41c22716e6",
+        "android_client_info": {
+          "package_name": "com.example.tamanbacaan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJRGo95erShEOPS_yjKVE5jLJ4bm0U3Zg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

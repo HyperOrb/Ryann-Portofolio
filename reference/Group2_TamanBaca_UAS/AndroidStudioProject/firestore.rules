@@ -1,0 +1,109 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --------- Helper fungsi umum ----------
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Ambil dokumen user yang lagi login
+    function getMe() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function myRole() {
+      return getMe().data.role;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && myRole() == "superadmin";
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (myRole() == "admin" || myRole() == "superadmin");
+    }
+
+    // --------- USERS COLLECTION ----------
+    // /users/{uid}
+    match /users/{uid} {
+      // Semua user yang login boleh baca data user (untuk cek role dll)
+      allow read: if isSignedIn();
+
+      // User boleh edit profilnya sendiri
+      allow write: if isSignedIn() && uid == request.auth.uid;
+
+      // Superadmin boleh edit semua user
+      allow write: if isSuperAdmin();
+    }
+
+    // --------- BOOKS COLLECTION ----------
+    // /books/{bookId}
+    match /books/{bookId} {
+      // Semua orang boleh lihat daftar buku
+      allow read: if true;
+
+      // Tambah / edit / hapus buku hanya oleh admin & superadmin
+      // Fallback: authenticated user juga bisa write (untuk menghindari PERMISSION_DENIED saat testing)
+      allow create, update, delete: if isSignedIn();
+    }
+
+    // --------- BORROWS COLLECTION ----------
+    // /borrows/{borrowId}
+    match /borrows/{borrowId} {
+      // Semua user yang login boleh baca data peminjaman
+      allow read: if isSignedIn();
+
+      // User yang login boleh membuat peminjaman baru
+      allow create: if isSignedIn();
+
+      // User yang login boleh update peminjaman
+      allow update: if isSignedIn();
+
+      // Hapus hanya untuk admin/superadmin
+      allow delete: if isAdmin();
+    }
+
+    // --------- CAROUSELS COLLECTION ----------
+    match /carousels/{carouselId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // --------- CAROUSEL COLLECTION (alternative path) ----------
+    match /carousel/{slideId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    // --------- COMMENTS COLLECTION ----------
+    // /comments/{commentId}
+    match /comments/{commentId} {
+      // Semua user yang LOGIN boleh baca semua komentar
+      allow read: if isSignedIn();
+
+      // Semua user yang LOGIN boleh nambah komentar
+      allow create: if isSignedIn();
+
+      // Edit / hapus komentar hanya boleh admin/superadmin
+      allow update, delete: if isAdmin();
+    }
+
+    // --------- REVIEWS COLLECTION ----------
+    // /reviews/{reviewId}
+    match /reviews/{reviewId} {
+      // Semua orang boleh baca reviews (untuk tampilkan di halaman buku)
+      allow read: if true;
+
+      // User yang login boleh membuat review baru
+      allow create: if isSignedIn();
+
+      // User hanya boleh edit/hapus review miliknya sendiri
+      allow update, delete: if isSignedIn() &&
+                               request.auth.uid == resource.data.userId;
+
+      // Admin boleh edit/hapus semua review
+      allow update, delete: if isAdmin();
+    }
+  }
+}
