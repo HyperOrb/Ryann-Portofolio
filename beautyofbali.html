@@ -145,6 +145,32 @@
                 transform: scale(1.1);
             }
         }
+
+        /* CTA buttons */
+        .cta-row { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+        }
+        .cta-btn.primary {
+            background: #a3f7b5;
+            color: #000;
+        }
+        .cta-btn.primary:hover { background: #7eeea0; transform: translateY(-2px); }
+        .cta-btn.secondary {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .cta-btn.secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
     </style>
 </head>
 
@@ -221,9 +247,12 @@
                         </div>
 
                         <div class="meta-group">
-                            <h4>Publication Link</h4>
-                            <a href="https://beautyofbali.vercel.app" target="_blank"
-                                data-hover="Expand">beautyofbali.vercel.app</a>
+                            <h4>Links</h4>
+                            <div class="cta-row">
+                                <a href="https://beautyofbali.vercel.app" target="_blank" class="cta-btn primary" data-hover="Expand">
+                                    🌐 View Website
+                                </a>
+                            </div>
                         </div>
                     </div>
 

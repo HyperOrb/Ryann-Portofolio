@@ -370,10 +370,10 @@ if (workSection && workTrack && workCards.length > 0) {
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                     snap: {
-                        snapTo: 1 / steps,
-                        duration: 0.28,
-                        delay: 0.04,
-                        ease: 'power2.out',
+                        snapTo: (progress) => Math.round(progress * steps) / steps,
+                        duration: { min: 0.2, max: 0.6 },
+                        delay: 0.15,
+                        ease: 'power2.inOut',
                         inertia: false
                     },
                     onUpdate: (self) => {
@@ -402,9 +402,12 @@ if (workSection && workTrack && workCards.length > 0) {
 }
 
 // Back to top
-document.getElementById('backToTop').addEventListener('click', () => {
-    lenis.scrollTo(0, { duration: 1.5 });
-});
+const backToTopBtn = document.getElementById('backToTop');
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+        lenis.scrollTo(0, { duration: 1.5 });
+    });
+}
 
 // --- Menu Toggle Logic ---
 const menuToggle = document.getElementById('menuToggle');
@@ -455,3 +458,48 @@ sidebarLinks.forEach(link => {
         }
     });
 });
+
+// --- About Section Text Color Scroll Reveal ---
+const aboutSection = document.querySelector('.about-section-new');
+if (aboutSection) {
+    const aboutWords = document.querySelectorAll('.about-word');
+
+    // Initial state: dark gray
+    gsap.set(aboutWords, { color: '#666666' });
+
+    const aboutTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: aboutSection,
+            scroller: document.body,
+            start: "top 60%", 
+            end: "bottom 80%",
+            scrub: true
+        }
+    });
+
+    // Staggered word reveal
+    aboutTl.to(aboutWords, {
+        color: '#ffffff',
+        stagger: 0.1,
+        duration: 0.5,
+        ease: "none"
+    });
+
+    // Portrait reveal animation
+    gsap.fromTo('#aboutPortrait', 
+        { y: 150, opacity: 0 },
+        {
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: aboutSection,
+                scroller: document.body,
+                start: "top 80%", 
+                end: "top 40%",
+                scrub: true
+            }
+        }
+    );
+}

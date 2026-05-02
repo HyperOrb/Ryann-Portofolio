@@ -82,7 +82,7 @@
             <div class="white-container">
                 <section class="section-intro">
                     <p class="eyebrow">Based in Indonesia · Computer Science</p>
-                    <h2>Sup, I'm Ryann Chandiari.</h2>
+                    <h2>Ryann Chandiari</h2>
                     <p class="lede">Passionately creating digital experiences rooted in user needs. I love bridging the gap between awesome tech and the people who use it.</p>
                 </section>
 
@@ -121,8 +121,9 @@
                             </article>
                             <article class="work-card" data-index="03">
                                 <a href="cardcast.html" class="work-card-link" data-hover="Expand">
-                                    <div class="work-card-media">
-                                        <img src="assets/cardcast_cover.png" alt="Card Cast project preview">
+                                    <div class="work-card-media" style="background-image: url('assets/cardcast_cover.png'); background-size: cover; background-position: center; position: relative; transform: translateZ(0);">
+                                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); background: rgba(0,0,0,0.3); z-index: 0;"></div>
+                                        <img src="assets/cardcast_cover.png" alt="Card Cast project preview" style="height: 105%; width: auto; max-width: none; object-fit: contain; position: relative; z-index: 1; transition: transform 0.4s ease;">
                                     </div>
                                     <div class="work-card-body">
                                         <span class="work-card-index">03</span>
@@ -135,11 +136,11 @@
                             <article class="work-card" data-index="04">
                                 <a href="tamanbaca.html" class="work-card-link" data-hover="Expand">
                                     <div class="work-card-media">
-                                        <img src="assets/tamanbacaan_hero.png" alt="PojokBaca project preview">
+                                        <img src="assets/tamanbacaan_hero.png" alt="Pojok Baca project preview">
                                     </div>
                                     <div class="work-card-body">
                                         <span class="work-card-index">04</span>
-                                        <h4 class="work-card-title">PojokBaca</h4>
+                                        <h4 class="work-card-title">Pojok Baca</h4>
                                         <p class="work-card-subtitle">Lead Android Dev · ML · Firebase</p>
                                         <span class="work-card-cta">View project ↗</span>
                                     </div>
@@ -149,50 +150,43 @@
                     </div>
                 </section>
 
-                <section class="about-section" id="about">
-                    <div class="section-header">
-                        <h3>About me</h3>
-                        <span class="section-count">(4)</span>
+                <section class="about-section-new" id="about">
+                    <!-- Portrait Container -->
+                    <div class="about-portrait" id="aboutPortrait">
+                        <!-- Portrait background color and actual image -->
+                        <div class="portrait-bg"></div>
+                        <img src="assets/ryann.JPG" alt="Ryann Chandiari">
                     </div>
-                    <div class="about-grid">
-                        <p class="about-text">I love to inspire because I know what it's like to be inspired. Seeing design work and having fun with it, that's what it's all about.</p>
-                        <div class="about-lists">
-                            <div class="about-list">
-                                <span class="list-label">Worked with</span>
-                                <ul>
-                                    <li>UMN ECO</li>
-                                    <li>HMIF UMN</li>
-                                    <li>PPIFUMN2024</li>
-                                </ul>
-                            </div>
-                            <div class="about-list">
-                                <span class="list-label">Focus</span>
-                                <ul>
-                                    <li>UI/UX</li>
-                                    <li>Frontend</li>
-                                    <li>Game Dev</li>
-                                    <li>Systems Architecture</li>
-                                    <li>Machine Learning</li>
-                                    <li>Agentic AI</li>
-                                    <li>VFX</li>
-                                </ul>
-                            </div>
-                        </div>
+                    
+                    <!-- Single text layer with mix-blend-mode -->
+                    <div class="about-text-blend" id="aboutTextBlend">
+                        <span class="about-word">I</span> <span class="about-word">love</span> <span class="about-word">to</span> <span class="about-word">inspire,</span> <span class="about-word">because</span> <span class="about-word">I</span> <span class="about-word">know</span><br>
+                        <span class="about-word">what</span> <span class="about-word">it's</span> <span class="about-word">like</span> <span class="about-word">to</span> <span class="about-word">be</span> <span class="about-word">inspired.</span><br>
+                        <span class="about-word">Seeing</span> <span class="about-word">design</span> <span class="about-word">work</span> <span class="about-word">and</span> <span class="about-word">having</span><br>
+                        <span class="about-word">fun,</span> <span class="about-word">that's</span> <span class="about-word">what</span> <span class="about-word">it's</span> <span class="about-word">all</span> <span class="about-word">about.</span>
                     </div>
                 </section>
             </div>
         </section>
 
-        <!-- Footer Area -->
-        <footer class="footer">
-            <div class="footer-content">
-                <h2>Let's build something great.</h2>
-                <div class="footer-bottom">
-                    <div class="socials">
-                        <a href="https://www.linkedin.com/in/rynnchan" target="_blank" data-hover="Expand">LinkedIn</a>
-                        <a href="https://www.instagram.com/rynnchn_/" target="_blank" data-hover="Expand">Instagram</a>
-                    </div>
-                    <button class="back-to-top" id="backToTop" data-hover="Expand">Back to top ↑</button>
+        <!-- New Minimalist Footer -->
+        <footer class="footer-new">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <span class="footer-label">Credits</span>
+                    <span class="footer-link">© R.C. - 2026</span>
+                </div>
+                <div class="footer-col">
+                    <span class="footer-label">Menu</span>
+                    <a href="#" class="footer-link">Home</a>
+                    <a href="#content" class="footer-link">Work</a>
+                    <a href="#about" class="footer-link">About</a>
+                </div>
+                <div class="footer-col">
+                    <span class="footer-label">Contact</span>
+                    <a href="https://www.linkedin.com/in/rynnchan" target="_blank" class="footer-link" data-hover="Expand">Linkedin</a>
+                    <a href="https://www.instagram.com/rynnchn_/" target="_blank" class="footer-link" data-hover="Expand">Instagram</a>
+                    <a href="mailto:ryann.chandiari@gmail.com" class="footer-link" data-hover="Expand">Email</a>
                 </div>
             </div>
         </footer>

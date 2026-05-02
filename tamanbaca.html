@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PojokBaca - Ryann Chandiari</title>
-    <meta name="description" content="PojokBaca — A digital library application featuring real-time sentiment analysis. Built with Kotlin, Jetpack Compose, and Firebase.">
+    <title>Pojok Baca - Ryann Chandiari</title>
+    <meta name="description" content="Pojok Baca — A digital library application featuring real-time sentiment analysis. Built with Kotlin, Jetpack Compose, and Firebase.">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -175,6 +175,32 @@
             margin-bottom: 14px;
             display: block;
         }
+
+        /* CTA buttons */
+        .cta-row { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+        }
+        .cta-btn.primary {
+            background: #a3f7b5;
+            color: #000;
+        }
+        .cta-btn.primary:hover { background: #7eeea0; transform: translateY(-2px); }
+        .cta-btn.secondary {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .cta-btn.secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -197,7 +223,7 @@
             </svg>
             <span id="menuText">Menu</span>
         </div>
-        <a href="index.html" class="logo" data-hover="Expand">R.C.</a>
+        <a href="index.html" style="text-decoration:none; color:inherit;" class="logo" data-hover="Expand">R.C.</a>
     </header>
 
     <div class="smooth-scroll-wrapper" id="pageWrapper">
@@ -213,7 +239,7 @@
             "></div>
             <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, #000 100%);z-index:1;"></div>
             <div class="project-hero-content" style="position:relative;z-index:2;text-align:center;">
-                <h1>PojokBaca</h1>
+                <h1>Pojok Baca</h1>
                 <p style="color:#a3f7b5;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;margin-top:16px;">2025 &nbsp;·&nbsp; Android Dev &nbsp;·&nbsp; Machine Learning</p>
             </div>
             <div class="scroll-indicator" style="z-index:2;">
@@ -239,15 +265,24 @@
                                 <span class="tag">TensorFlow Lite</span>
                             </div>
                         </div>
+
+                        <div class="meta-group">
+                            <h4>Links</h4>
+                            <div class="cta-row">
+                                <a href="https://github.com/HyperOrb/PojokBaca" target="_blank" class="cta-btn primary" data-hover="Expand">
+                                    💻 View on GitHub
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="content-main">
-                        <img src="assets/tamanbacaan_hero.png" alt="PojokBaca App Preview" class="project-image-full">
+                        <img src="assets/tamanbacaan_hero.png" alt="Pojok Baca App Preview" class="project-image-full">
 
                         <div class="description-group">
                             <span class="section-label">Overview</span>
                             <h3>Digital Library with a Smart Heart</h3>
-                            <p>PojokBaca (Taman Bacaan) is a comprehensive digital library application designed to modernize the reading experience. While it handles core library functions like book discovery, borrowing, and user management, its standout feature is a built-in sentiment analysis engine for book reviews.</p>
+                            <p>Pojok Baca (Taman Bacaan) is a comprehensive digital library application designed to modernize the reading experience. While it handles core library functions like book discovery, borrowing, and user management, its standout feature is a built-in sentiment analysis engine for book reviews.</p>
                             <p>Built with a modern Android stack, the app leverages Firebase for real-time data persistence and authentication, ensuring a seamless experience across devices. The goal was to create not just a repository for books, but a community-driven platform where readers can share and understand the collective sentiment of the library's catalog.</p>
                         </div>
 
@@ -282,7 +317,7 @@
                             <span class="section-label">The Core Engine</span>
                             <h3>Real-Time Sentiment Analysis</h3>
                             <p>I engineered a custom keyword-based sentiment classification engine that runs entirely on-device. As users type their reviews, the system provides instantaneous feedback, categorizing their sentiment as Positive, Neutral, or Negative with a calculated confidence score.</p>
-                            <img src="assets/tamanbaca_analytics.png" alt="Sentiment Analytics Dashboard" class="project-image-full" style="margin-top: 20px;">
+                            <img src="assets/tamanbaca_analytics.png" alt="Sentiment Analytics Dashboard" style="width: 100%; max-width: 350px; height: auto; border-radius: 18px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); display: block; margin: 20px auto 40px;">
                             <div class="tech-grid">
                                 <div class="tech-card">
                                     <span>Real-Time Feedback</span>
@@ -321,7 +356,7 @@
                         <div class="description-group">
                             <span class="section-label">Reflection</span>
                             <h3>My Role & Contribution</h3>
-                            <p>As the Lead Android Developer and ML Engineer, I was responsible for the entire technical implementation of the PojokBaca application. My primary contribution was the design and development of the Sentiment Analysis Engine and the Review Management System.</p>
+                            <p>As the Lead Android Developer and ML Engineer, I was responsible for the entire technical implementation of the Pojok Baca application. My primary contribution was the design and development of the Sentiment Analysis Engine and the Review Management System.</p>
                             <p>I focused on creating a highly responsive user interface using Jetpack Compose, ensuring that the machine learning components felt like a natural, invisible part of the user experience. Leading the development phase meant coordinating the database schema in Firestore with the frontend state management, resulting in a production-ready application that balanced performance with intelligent features.</p>
                         </div>
 
