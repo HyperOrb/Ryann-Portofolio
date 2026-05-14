@@ -1,57 +1,16 @@
-// Initialize Lenis Smooth Scroll
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-    infinite: false,
-})
-
-// Native RAF removed to avoid conflict with GSAP ticker
-
-// Sync GSAP with Lenis
 gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.config({ ignoreMobileResize: true });
 
-ScrollTrigger.scrollerProxy(document.body, {
-    scrollTop(value) {
-        if (arguments.length) {
-            lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-    },
-    getBoundingClientRect() {
-        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    },
-    pinType: document.body.style.transform ? 'transform' : 'fixed'
-});
-
-ScrollTrigger.defaults({ scroller: document.body });
-
-// Update ScrollTrigger on Lenis scroll
-lenis.on('scroll', ScrollTrigger.update);
-
-ScrollTrigger.addEventListener('refresh', () => lenis.update());
-
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000)
-})
-gsap.ticker.lagSmoothing(0);
-
-window.addEventListener('load', () => {
-    ScrollTrigger.refresh();
-});
-
-// --- Custom Cursor Logic ---
-const cursor = document.querySelector('.cursor');
-const hoverElements = document.querySelectorAll('[data-hover], a, button, .project-image-wrapper');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const cursor = document.querySelector('.cursor');
+const hoverElements = document.querySelectorAll('[data-hover], a, button, .project-image-wrapper');
+const heroBackground = document.querySelector('.hero-bg-waves');
+const typedWord = document.getElementById('typedWord');
+const heroSubtitle = document.getElementById('hero-subtitle');
+const introLoader = document.getElementById('introLoader');
+const introCount = document.getElementById('introCount');
 
 if (cursor && canHover && !prefersReducedMotion) {
     let mouseX = 0;
@@ -61,445 +20,319 @@ if (cursor && canHover && !prefersReducedMotion) {
     const setCursorX = gsap.quickSetter(cursor, 'x', 'px');
     const setCursorY = gsap.quickSetter(cursor, 'y', 'px');
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+    document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
     });
 
     gsap.ticker.add(() => {
-        cursorX += (mouseX - cursorX) * 0.2;
-        cursorY += (mouseY - cursorY) * 0.2;
+        cursorX += (mouseX - cursorX) * 0.18;
+        cursorY += (mouseY - cursorY) * 0.18;
         setCursorX(cursorX);
         setCursorY(cursorY);
+    });
+
+    hoverElements.forEach((element) => {
+        element.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+        element.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
     });
 } else if (cursor) {
     cursor.style.display = 'none';
 }
 
-hoverElements.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-        cursor.classList.add('hovered');
+if (heroBackground && canHover && !prefersReducedMotion) {
+    let glowX = window.innerWidth * 0.7;
+    let glowY = window.innerHeight * 0.48;
+    let targetGlowX = glowX;
+    let targetGlowY = glowY;
+
+    document.addEventListener('pointermove', (event) => {
+        targetGlowX = event.clientX;
+        targetGlowY = event.clientY;
+    }, { passive: true });
+
+    gsap.ticker.add(() => {
+        glowX += (targetGlowX - glowX) * 0.12;
+        glowY += (targetGlowY - glowY) * 0.12;
+        heroBackground.style.setProperty('--pointer-x', `${(glowX / window.innerWidth) * 100}%`);
+        heroBackground.style.setProperty('--pointer-y', `${(glowY / window.innerHeight) * 100}%`);
     });
-    el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hovered');
-    });
-});
+}
 
-// --- Typewriter Effect ---
-const titleElement = document.getElementById('hero-title');
-const subtitleElement = document.getElementById('hero-subtitle');
+if (typedWord) {
+    const typedWords = [
+        { text: 'move', color: '#458dff' },
+        { text: 'learn', color: '#66ffb2' },
+        { text: 'respond', color: '#79b8ff' },
+        { text: 'connect', color: '#c9f6ff' }
+    ];
 
-const mainPrefix = "Sup, I'm ";
-const mainName = "Ryann Chandiari.";
-const fullMainText = mainPrefix + mainName;
-const subtitlePrefix = "I'm a ";
-const rotatingWords = [
-    "Computer Science student.",
-    "software engineer.",
-    "website developer.",
-    "tech enthusiast.",
-    "problem solver."
-];
-
-let mainIndex = 0;
-let wordIndex = 0;
-let subIndex = 0;
-let isDeleting = false;
-
-// 1. Type the main title first
-function typeMainTitle() {
-    if (mainIndex < fullMainText.length) {
-        let typed = fullMainText.substring(0, mainIndex + 1);
-        let htmlStr = "";
-
-        if (mainIndex < mainPrefix.length) {
-            htmlStr = `<span style="color: #a6a6a6;">${typed}</span>`;
-        } else {
-            let typedName = typed.substring(mainPrefix.length);
-            htmlStr = `<span style="color: #a6a6a6;">${mainPrefix}</span><span style="color: #ffffff;">${typedName}</span>`;
-        }
-
-        titleElement.innerHTML = htmlStr + '<span class="cursor-blink">|</span>';
-        mainIndex++;
-        setTimeout(typeMainTitle, 80 + Math.random() * 40);
+    if (prefersReducedMotion) {
+        typedWord.textContent = typedWords[0].text;
     } else {
-        // Remove cursor from main title and start subtitle
-        titleElement.innerHTML = `<span style="color: #a6a6a6;">${mainPrefix}</span><span style="color: #ffffff;">${mainName}</span>`;
-        setTimeout(typeSubtitle, 500);
-    }
-}
+        let wordIndex = 0;
+        let characterIndex = typedWords[0].text.length;
+        let isDeleting = true;
 
-// 2. Loop the subtitle typing
-function typeSubtitle() {
-    const currentWord = rotatingWords[wordIndex];
-    let displayText = subtitlePrefix;
+        const typeNextFrame = () => {
+            const currentWord = typedWords[wordIndex];
+            typedWord.style.color = currentWord.color;
+            typedWord.textContent = currentWord.text.slice(0, characterIndex);
 
-    if (isDeleting) {
-        displayText += currentWord.substring(0, subIndex - 1);
-        subIndex--;
-    } else {
-        displayText += currentWord.substring(0, subIndex + 1);
-        subIndex++;
-    }
-
-    subtitleElement.innerHTML = displayText + '<span class="cursor-blink">|</span>';
-
-    // Typing speed logic
-    let typeSpeed = isDeleting ? 40 : 100 + Math.random() * 50;
-
-    if (!isDeleting && subIndex === currentWord.length) {
-        // Pause at end of word
-        typeSpeed = 1500;
-        isDeleting = true;
-    } else if (isDeleting && subIndex === 0) {
-        isDeleting = false;
-        wordIndex = (wordIndex + 1) % rotatingWords.length;
-        typeSpeed = 500; // pause before next word
-    }
-
-    setTimeout(typeSubtitle, typeSpeed);
-}
-
-// --- Page Load & Start Sequence ---
-if (titleElement) {
-    titleElement.innerHTML = '<span class="cursor-blink">|</span>';
-    subtitleElement.innerHTML = '';
-}
-
-// Initial states for animation
-gsap.set('.nav', { y: -50, opacity: 0 });
-gsap.set('.hero-bg-waves', { opacity: 0 });
-gsap.set('.scroll-indicator', { y: 20, opacity: 0 });
-
-// Page Load Timeline
-const loadTl = gsap.timeline();
-
-loadTl.to('.nav', { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2 })
-    .to('.hero-bg-waves', { opacity: 0.6, duration: 1.5, ease: 'power2.out' }, '-=0.5')
-    .call(() => {
-        // Start typing after initial layout revealed
-        if (titleElement) setTimeout(typeMainTitle, 200);
-    })
-    .to('.scroll-indicator', { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }, '+=0.5');
-
-
-// --- GSAP Animations ---
-
-// 1. Reveal White Container over Hero
-// The hero is sticky, so the white container naturally overlays it.
-// We can add a slight tilt or shadow tweak as it comes up natively, but the CSS handles the core overlay.
-// Let's add a parallax fade to the hero content.
-gsap.to('.hero-content', {
-    scrollTrigger: {
-        trigger: '.content-reveal',
-        start: "top 100%",
-        end: "top 20%",
-        scrub: true
-    },
-    y: -100,
-    opacity: 0,
-    ease: "none"
-});
-
-gsap.fromTo('.hero-bg-waves',
-    { opacity: 0.6, scale: 1 },
-    {
-        scrollTrigger: {
-            trigger: '.content-reveal',
-            start: "top 100%",
-            end: "top 0%",
-            scrub: true,
-            invalidateOnRefresh: true,
-            onLeaveBack: () => {
-                gsap.to('.hero-bg-waves', {
-                    opacity: 0.6,
-                    scale: 1,
-                    duration: 0.2,
-                    overwrite: true
-                });
+            if (heroSubtitle) {
+                heroSubtitle.setAttribute(
+                    'aria-label',
+                    `Computer Science student building digital experiences that ${currentWord.text}.`
+                );
             }
-        },
-        opacity: 0,
-        scale: 0.9,
-        ease: "none"
+
+            if (!isDeleting && characterIndex === currentWord.text.length) {
+                isDeleting = true;
+                window.setTimeout(typeNextFrame, 1180);
+                return;
+            }
+
+            if (isDeleting && characterIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % typedWords.length;
+                window.setTimeout(typeNextFrame, 220);
+                return;
+            }
+
+            characterIndex += isDeleting ? -1 : 1;
+            window.setTimeout(typeNextFrame, isDeleting ? 42 : 72);
+        };
+
+        window.setTimeout(typeNextFrame, 900);
     }
-);
-
-// 2. Horizontal Parallax Text inside Project Cards
-const projectCards = document.querySelectorAll('.project-card');
-
-projectCards.forEach((card) => {
-    const bgText = card.querySelector('.project-bg-text');
-    const speed = bgText.getAttribute('data-speed') || 1;
-
-    gsap.to(bgText, {
-        scrollTrigger: {
-            trigger: card,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-        },
-        x: () => -window.innerWidth * speed * 0.5,
-        ease: 'none'
-    });
-
-    if (!canHover || prefersReducedMotion) return;
-
-    const imgWrapper = card.querySelector('.project-image-wrapper');
-    gsap.set(imgWrapper, { transformPerspective: 1000 });
-    const setRotateX = gsap.quickSetter(imgWrapper, 'rotationX', 'deg');
-    const setRotateY = gsap.quickSetter(imgWrapper, 'rotationY', 'deg');
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let isHovering = false;
-    let rafId = null;
-
-    const animateTilt = () => {
-        currentX += (targetX - currentX) * 0.15;
-        currentY += (targetY - currentY) * 0.15;
-        setRotateX(currentX);
-        setRotateY(currentY);
-
-        const isSettled = Math.abs(targetX - currentX) < 0.05 && Math.abs(targetY - currentY) < 0.05;
-        if (isHovering || !isSettled) {
-            rafId = requestAnimationFrame(animateTilt);
-        } else {
-            rafId = null;
-        }
-    };
-
-    card.addEventListener('mouseenter', () => {
-        isHovering = true;
-        if (!rafId) {
-            rafId = requestAnimationFrame(animateTilt);
-        }
-    });
-
-    card.addEventListener('mousemove', (e) => {
-        const rect = imgWrapper.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        const multiplier = 20;
-        targetX = (-y / (rect.height / 2)) * multiplier;
-        targetY = (x / (rect.width / 2)) * multiplier;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        isHovering = false;
-        targetX = 0;
-        targetY = 0;
-        if (!rafId) {
-            rafId = requestAnimationFrame(animateTilt);
-        }
-    });
-});
-
-// Intro text reveal
-gsap.from('.intro-text h2', {
-    scrollTrigger: {
-        trigger: '.intro-text',
-        start: "top 80%"
-    },
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
-});
-
-// Selected work stacked flip
-const workSection = document.querySelector('.work-section');
-const workTrack = document.querySelector('.work-track');
-const workCards = workTrack ? Array.from(workTrack.children) : [];
-
-if (workSection && workTrack && workCards.length > 0) {
-    workSection.style.setProperty('--work-count', workCards.length);
-
-    workCards.forEach((card, index) => {
-        gsap.set(card, {
-            rotationX: 16,
-            rotationY: -6,
-            y: 40,
-            scale: 0.96,
-            opacity: 0,
-            transformOrigin: '50% 100%'
-        });
-
-        if (index === 0) {
-            gsap.set(card, {
-                rotationX: 0,
-                rotationY: 0,
-                y: 0,
-                scale: 1,
-                opacity: 1
-            });
-        }
-    });
-
-    ScrollTrigger.matchMedia({
-        '(min-width: 769px)': () => {
-            const steps = Math.max(1, workCards.length - 1);
-            const endDistance = workCards.length * 150;
-            const flipTo = (nextIndex) => {
-                workCards.forEach((card, i) => {
-                    const isActive = i === nextIndex;
-                    const target = isActive
-                        ? { rotationX: 0, rotationY: 0, y: 0, scale: 1, opacity: 1 }
-                        : { rotationX: 16, rotationY: -6, y: 40, scale: 0.96, opacity: 0 };
-                    gsap.to(card, {
-                        ...target,
-                        duration: 0.45,
-                        ease: 'power2.out',
-                        overwrite: true
-                    });
-                });
-            };
-
-            const trackTween = gsap.to(workTrack, {
-                yPercent: -100 * steps,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: workSection,
-                    start: 'top top',
-                    end: () => `+=${endDistance}%`,
-                    pin: true,
-                    pinType: 'transform',
-                    pinSpacing: true,
-                    scrub: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    snap: {
-                        snapTo: (progress) => Math.round(progress * steps) / steps,
-                        duration: { min: 0.2, max: 0.6 },
-                        delay: 0.15,
-                        ease: 'power2.inOut',
-                        inertia: false
-                    },
-                    onUpdate: (self) => {
-                        const index = Math.round(self.progress * steps);
-                        workCards.forEach((card, i) => {
-                            card.classList.toggle('is-active', i === index);
-                        });
-                        flipTo(index);
-                    },
-                    onRefresh: (self) => {
-                        const index = Math.round(self.progress * steps);
-                        workCards.forEach((card, i) => {
-                            card.classList.toggle('is-active', i === index);
-                        });
-                        flipTo(index);
-                    }
-                }
-            });
-
-            return () => {
-                trackTween.scrollTrigger?.kill();
-                trackTween.kill();
-            };
-        }
-    });
 }
 
-// Back to top
-const backToTopBtn = document.getElementById('backToTop');
-if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
-        lenis.scrollTo(0, { duration: 1.5 });
-    });
-}
-
-// --- Menu Toggle Logic ---
 const menuToggle = document.getElementById('menuToggle');
 const menuText = document.getElementById('menuText');
 const menuIcon = document.getElementById('menuIcon');
+const menuBackdrop = document.getElementById('menuBackdrop');
 let isMenuOpen = false;
 
-menuToggle.addEventListener('click', () => {
-    isMenuOpen = !isMenuOpen;
+function setMenu(open) {
+    isMenuOpen = open;
     document.body.classList.toggle('menu-open', isMenuOpen);
 
-    if (isMenuOpen) {
-        menuText.textContent = 'Close';
-        lenis.stop(); // Stop scroll when menu is open
-        gsap.to(menuIcon, { rotation: 90, duration: 0.3 });
-    } else {
-        menuText.textContent = 'Menu';
-        lenis.start(); // Resume scroll
-        gsap.to(menuIcon, { rotation: 0, duration: 0.3 });
+    if (menuToggle) {
+        menuToggle.setAttribute('aria-expanded', String(isMenuOpen));
+    }
+
+    if (menuText) {
+        menuText.textContent = isMenuOpen ? 'Close' : 'Menu';
+    }
+
+    if (menuIcon) {
+        gsap.to(menuIcon, {
+            rotation: isMenuOpen ? 90 : 0,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+    }
+}
+
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => setMenu(!isMenuOpen));
+}
+
+if (menuBackdrop) {
+    menuBackdrop.addEventListener('click', () => setMenu(false));
+}
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isMenuOpen) {
+        setMenu(false);
     }
 });
 
-// --- Smooth Scroll for Sidebar Links ---
-const sidebarLinks = document.querySelectorAll('.sidebar-link');
-sidebarLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
+function scrollToTarget(targetId) {
+    if (targetId === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
         const targetId = link.getAttribute('href');
-        if (targetId && targetId.startsWith('#')) {
-            e.preventDefault();
+        if (!targetId) return;
 
-            // Close the menu if it's open
-            if (isMenuOpen) {
-                menuToggle.click();
-            }
+        event.preventDefault();
 
-            // Wait for the 0.6s CSS transition on #pageWrapper to finish 
-            // so Lenis can calculate the correct vertical position
-            setTimeout(() => {
-                if (targetId === '#') {
-                    lenis.scrollTo(0, { duration: 1.5 });
-                } else {
-                    const targetEl = document.querySelector(targetId);
-                    if (targetEl) {
-                        lenis.scrollTo(targetEl, { duration: 1.5, offset: -50 });
-                    }
-                }
-            }, 650);
+        if (isMenuOpen) {
+            setMenu(false);
+            window.setTimeout(() => scrollToTarget(targetId), 420);
+            return;
         }
+
+        scrollToTarget(targetId);
     });
 });
 
-// --- About Section Text Color Scroll Reveal ---
-const aboutSection = document.querySelector('.about-section-new');
-if (aboutSection) {
-    const aboutWords = document.querySelectorAll('.about-word');
+function startPageMotion() {
+    gsap.set('.nav', { y: -24, opacity: 0 });
+    gsap.set('.hero-content > *', { y: 34, opacity: 0 });
+    gsap.set('.hero-bg-waves', { opacity: 0 });
+    gsap.set('.scroll-indicator', { y: 18, opacity: 0 });
 
-    // Initial state: dark gray
-    gsap.set(aboutWords, { color: '#666666' });
+    const loadTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    loadTl
+        .to('.nav', { y: 0, opacity: 1, duration: 0.8, delay: 0.1 })
+        .to('.hero-bg-waves', { opacity: 1, duration: 1.25 }, '-=0.55')
+        .to('.hero-content > *', { y: 0, opacity: 1, duration: 0.95, stagger: 0.1 }, '-=0.65')
+        .to('.scroll-indicator', { y: 0, opacity: 1, duration: 0.8 }, '-=0.45');
 
-    const aboutTl = gsap.timeline({
+    gsap.to('.hero-content', {
         scrollTrigger: {
-            trigger: aboutSection,
-            scroller: document.body,
-            start: "top 60%", 
-            end: "bottom 80%",
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
             scrub: true
-        }
+        },
+        y: -80,
+        opacity: 0.18,
+        ease: 'none'
     });
 
-    // Staggered word reveal
-    aboutTl.to(aboutWords, {
-        color: '#ffffff',
-        stagger: 0.1,
-        duration: 0.5,
-        ease: "none"
+    gsap.to('.hero-grid', {
+        scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+        },
+        yPercent: 18,
+        xPercent: -4,
+        ease: 'none'
     });
 
-    // Portrait reveal animation
-    gsap.fromTo('#aboutPortrait', 
-        { y: 150, opacity: 0 },
-        {
-            y: 0,
-            opacity: 1,
-            duration: 1.5,
-            ease: "power3.out",
+    gsap.utils.toArray('.section-intro, .section-header, .work-card, .about-portrait').forEach((element) => {
+        gsap.from(element, {
+            scrollTrigger: {
+                trigger: element,
+                start: 'top 82%'
+            },
+            y: 52,
+            opacity: 0,
+            duration: 0.9,
+            ease: 'power3.out'
+        });
+    });
+
+    const aboutSection = document.querySelector('.about-section-new');
+    if (aboutSection) {
+        const aboutWords = document.querySelectorAll('.about-word');
+        gsap.set(aboutWords, { color: '#5b5b5b' });
+
+        gsap.timeline({
             scrollTrigger: {
                 trigger: aboutSection,
-                scroller: document.body,
-                start: "top 80%", 
-                end: "top 40%",
+                start: 'top 58%',
+                end: 'bottom 78%',
                 scrub: true
             }
-        }
-    );
+        }).to(aboutWords, {
+            color: '#ffffff',
+            stagger: 0.08,
+            ease: 'none'
+        });
+    }
 }
+
+function playIntroLoader() {
+    if (!introLoader || prefersReducedMotion) {
+        document.body.classList.remove('intro-running');
+        if (introLoader) {
+            introLoader.remove();
+        }
+        if (!prefersReducedMotion) {
+            startPageMotion();
+        }
+        return;
+    }
+
+    gsap.set('.nav', { y: -24, opacity: 0 });
+    gsap.set('.hero-content > *', { y: 34, opacity: 0 });
+    gsap.set('.hero-bg-waves', { opacity: 0 });
+    gsap.set('.scroll-indicator', { y: 18, opacity: 0 });
+
+    const counter = { value: 0 };
+    const introTl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        onComplete: () => {
+            document.body.classList.remove('intro-running');
+            introLoader.remove();
+            startPageMotion();
+        }
+    });
+
+    gsap.set('.intro-loader__mark', { y: 34, opacity: 0, filter: 'blur(10px)' });
+    gsap.set('.intro-loader__line', { scaleX: 0 });
+    gsap.set('.intro-loader__top span, .intro-loader__bottom span', { y: 12, opacity: 0 });
+
+    introTl
+        .to('.intro-loader__top span, .intro-loader__bottom span', {
+            y: 0,
+            opacity: 1,
+            duration: 0.55,
+            stagger: 0.05
+        })
+        .to('.intro-loader__mark', {
+            y: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 0.72
+        }, '-=0.28')
+        .to('.intro-loader__line', {
+            scaleX: 1,
+            duration: 0.7
+        }, '-=0.46')
+        .to('.intro-loader__scan', {
+            x: '138vw',
+            duration: 1.25,
+            ease: 'power2.inOut'
+        }, '-=0.62')
+        .to(counter, {
+            value: 100,
+            duration: 1.05,
+            ease: 'power2.out',
+            onUpdate: () => {
+                if (introCount) {
+                    introCount.textContent = String(Math.round(counter.value)).padStart(2, '0');
+                }
+            }
+        }, '-=1.05')
+        .to('.intro-loader__mark', {
+            y: -20,
+            opacity: 0,
+            filter: 'blur(8px)',
+            duration: 0.42,
+            ease: 'power2.in'
+        }, '+=0.08')
+        .to('.intro-loader', {
+            yPercent: -100,
+            duration: 0.82,
+            ease: 'power4.inOut'
+        }, '-=0.1');
+}
+
+if (!prefersReducedMotion) {
+    playIntroLoader();
+} else {
+    document.body.classList.remove('intro-running');
+    if (introLoader) {
+        introLoader.remove();
+    }
+}
+
+window.addEventListener('load', () => {
+    ScrollTrigger.refresh();
+});

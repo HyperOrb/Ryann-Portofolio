@@ -4,145 +4,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ryann Chandiari is a coder passionately creating digital experiences rooted in user needs.">
-    
+    <meta name="description" content="Ryann Chandiari is a Computer Science student building digital experiences that move, learn, and respond.">
+
     <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="Ryann Chandiari | Portofolio">
-    <meta property="og:description" content="Based in Indonesia. A coder who is passionately creating digital experiences.">
+    <meta property="og:title" content="Ryann Chandiari | Portfolio">
+    <meta property="og:description" content="A cinematic developer portfolio by Ryann Chandiari.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://HyperOrb.github.io/Ryann-Portofolio/">
     <meta property="og:image" content="https://HyperOrb.github.io/Ryann-Portofolio/assets/preview.png">
-    
-    <title>Ryann Chandiari | Portofolio</title>
-    <link rel="stylesheet" href="style.css">
+
+    <title>Ryann Chandiari | Portfolio</title>
+    <link rel="stylesheet" href="style.css?v=cinematic-12">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar" id="sidebar">
+<body class="intro-running">
+    <div class="intro-loader" id="introLoader" aria-hidden="true">
+        <div class="intro-loader__scan"></div>
+        <div class="intro-loader__top">
+            <span>Ryann Chandiari</span>
+            <span>Portfolio 2026</span>
+        </div>
+        <div class="intro-loader__center">
+            <span class="intro-loader__mark">Ryann</span>
+            <span class="intro-loader__line"></span>
+        </div>
+        <div class="intro-loader__bottom">
+            <span>Initializing interface</span>
+            <span id="introCount">00</span>
+        </div>
+    </div>
+
+    <nav class="sidebar" id="sidebar" aria-label="Site menu">
         <div class="sidebar-links">
             <a href="#" class="sidebar-link" data-hover="Expand">Home</a>
             <a href="#work" class="sidebar-link" data-hover="Expand">Work</a>
-            <a href="#" class="sidebar-link" data-hover="Expand">About</a>
-            <a href="#" class="sidebar-link" data-hover="Expand">Contact</a>
+            <a href="#about" class="sidebar-link" data-hover="Expand">About</a>
+            <a href="mailto:ryann.chandiari@gmail.com" class="sidebar-link" data-hover="Expand">Contact</a>
             <div class="sidebar-socials">
-                <a href="https://www.linkedin.com/in/rynnchan" target="_blank" data-hover="Expand">LinkedIn</a>
-                <a href="https://www.instagram.com/rynnchn_/" target="_blank" data-hover="Expand">Instagram</a>
+                <a href="https://www.linkedin.com/in/rynnchan" target="_blank" rel="noreferrer" data-hover="Expand">LinkedIn</a>
+                <a href="https://www.instagram.com/rynnchn_/" target="_blank" rel="noreferrer" data-hover="Expand">Instagram</a>
             </div>
         </div>
     </nav>
 
-    <!-- FIXED GLOBAL NAV -->
+    <button class="menu-backdrop" id="menuBackdrop" type="button" aria-label="Close menu"></button>
+
     <header class="nav">
-        <div class="menu-btn" data-hover="Expand" id="menuToggle">
+        <button class="menu-btn" data-hover="Expand" id="menuToggle" type="button" aria-controls="sidebar" aria-expanded="false">
             <svg class="hamburger-icon" id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="3" y1="8" x2="21" y2="8"></line>
                 <line x1="3" y1="16" x2="21" y2="16"></line>
             </svg>
             <span id="menuText">Menu</span>
-        </div>
-        <div class="logo">R.C.</div>
+        </button>
+        <a href="#" class="logo" data-hover="Expand">R.C.</a>
     </header>
 
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="glowing-border" aria-hidden="true"></div>
 
-    <!-- Viewport glowing border -->
-    <div class="glowing-border"></div>
-
-    <!-- Main Scroll Wrapper for Lenis -->
-    <div class="smooth-scroll-wrapper" id="pageWrapper">
-
-        <!-- Sticky Hero Section behind content -->
+    <main class="smooth-scroll-wrapper" id="pageWrapper">
         <section class="hero" id="hero">
-            <div class="hero-bg-waves">
-                <!-- Abstract waves -->
+            <div class="hero-bg-waves" aria-hidden="true">
+                <div class="hero-grid"></div>
                 <div class="wave wave1"></div>
                 <div class="wave wave2"></div>
+                <div class="orbital orbital-one"></div>
+                <div class="orbital orbital-two"></div>
+                <div class="signal signal-one"></div>
+                <div class="signal signal-two"></div>
+                <div class="coordinate">6.2088° S<br>106.8456° E</div>
             </div>
 
             <div class="hero-content">
-                <h1 id="hero-title"></h1>
-                <h2 class="hero-subtitle" id="hero-subtitle"></h2>
+                <h1 id="hero-title">
+                    <span class="hero-kicker">Sup, I'm</span>
+                    <span class="hero-name">Ryann<br>Chandiari.</span>
+                </h1>
+                <p class="hero-subtitle" id="hero-subtitle" aria-label="Computer Science student building digital experiences that move.">
+                    Computer Science student building digital experiences that
+                    <span class="typed-shell"><span class="typed-word" id="typedWord">move</span><span class="typed-caret" aria-hidden="true"></span><span class="typed-period">.</span></span>
+                </p>
+                <div class="hero-actions" aria-label="Primary sections">
+                    <a href="#work" data-hover="Expand">Work</a>
+                    <a href="#about" data-hover="Expand">About</a>
+                    <a href="mailto:ryann.chandiari@gmail.com" data-hover="Expand">Contact</a>
+                </div>
             </div>
 
             <div class="scroll-indicator">
-                <div class="mouse-icon">
-                    <div class="wheel"></div>
-                </div>
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
             </div>
         </section>
 
-        <!-- Content Reveal Section that slides over the hero -->
         <section class="content-reveal" id="content">
             <div class="white-container">
                 <section class="section-intro">
                     <p class="eyebrow">Based in Indonesia · Computer Science</p>
-                    <h2>Ryann Chandiari</h2>
-                    <p class="lede">Passionately creating digital experiences rooted in user needs. I love bridging the gap between awesome tech and the people who use it.</p>
+                    <h2>Design-minded developer turning ideas into things people can actually use.</h2>
+                    <p class="lede">I like building at the intersection of interface, systems, and playful technology: web experiences, ML-powered tools, Android apps, and games that make technical ideas feel clear.</p>
                 </section>
 
                 <section class="work-section" id="work" style="--work-count: 4;">
                     <div class="section-header">
-                        <h3>Selected work</h3>
-                        <span class="section-count">(4)</span>
+                        <div>
+                            <span class="section-index">01</span>
+                            <h3>Selected work</h3>
+                        </div>
+                        <a href="#about" class="section-link" data-hover="Expand">More about me</a>
                     </div>
+
                     <div class="work-stack">
                         <div class="work-track" id="workTrack">
-                            <article class="work-card" data-index="01">
+                            <article class="work-card is-active" data-index="01">
                                 <a href="beautyofbali.html" class="work-card-link" data-hover="Expand">
+                                    <div class="work-card-copy">
+                                        <span class="work-card-index">01</span>
+                                        <h4 class="work-card-title">Beauty of Bali</h4>
+                                        <p class="work-card-subtitle">A travel and culture platform shaped around clean API integration, backend structure, and collaborative product delivery.</p>
+                                        <span class="work-card-tags">API · Backend · Web</span>
+                                    </div>
                                     <div class="work-card-media">
                                         <img src="assets/beautyofbali-hero.png" alt="Beauty of Bali project preview">
                                     </div>
-                                    <div class="work-card-body">
-                                        <span class="work-card-index">01</span>
-                                        <h4 class="work-card-title">Beauty of Bali</h4>
-                                        <p class="work-card-subtitle">API Integration · Backend Development</p>
-                                        <span class="work-card-cta">View project ↗</span>
-                                    </div>
                                 </a>
                             </article>
+
                             <article class="work-card" data-index="02">
                                 <a href="tokopedia.html" class="work-card-link" data-hover="Expand">
+                                    <div class="work-card-copy">
+                                        <span class="work-card-index">02</span>
+                                        <h4 class="work-card-title">Tokopedia Sentiment Analysis</h4>
+                                        <p class="work-card-subtitle">An NLP and machine learning project classifying ecommerce reviews with SVM-based sentiment analysis.</p>
+                                        <span class="work-card-tags">Machine Learning · NLP · Python</span>
+                                    </div>
                                     <div class="work-card-media">
                                         <img src="assets/tokopedia_hero_bg.svg" alt="Tokopedia Sentiment Analysis project preview">
                                     </div>
-                                    <div class="work-card-body">
-                                        <span class="work-card-index">02</span>
-                                        <h4 class="work-card-title">Tokopedia Sentiment Analysis</h4>
-                                        <p class="work-card-subtitle">Machine Learning · NLP</p>
-                                        <span class="work-card-cta">View project ↗</span>
-                                    </div>
                                 </a>
                             </article>
+
                             <article class="work-card" data-index="03">
                                 <a href="cardcast.html" class="work-card-link" data-hover="Expand">
-                                    <div class="work-card-media" style="background-image: url('assets/cardcast_cover.png'); background-size: cover; background-position: center; position: relative; transform: translateZ(0);">
-                                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); background: rgba(0,0,0,0.3); z-index: 0;"></div>
-                                        <img src="assets/cardcast_cover.png" alt="Card Cast project preview" style="height: 105%; width: auto; max-width: none; object-fit: contain; position: relative; z-index: 1; transition: transform 0.4s ease;">
-                                    </div>
-                                    <div class="work-card-body">
+                                    <div class="work-card-copy">
                                         <span class="work-card-index">03</span>
                                         <h4 class="work-card-title">Card Cast!</h4>
-                                        <p class="work-card-subtitle">Developer Lead · Systems Architecture · Unity</p>
-                                        <span class="work-card-cta">View project ↗</span>
+                                        <p class="work-card-subtitle">A Unity card-based tower defense game focused on systems architecture, game feel, and team execution.</p>
+                                        <span class="work-card-tags">Unity · Systems · Game Dev</span>
+                                    </div>
+                                    <div class="work-card-media cardcast-media">
+                                        <img src="assets/cardcast_cover.png" alt="Card Cast project preview">
                                     </div>
                                 </a>
                             </article>
+
                             <article class="work-card" data-index="04">
                                 <a href="tamanbaca.html" class="work-card-link" data-hover="Expand">
-                                    <div class="work-card-media">
-                                        <img src="assets/tamanbacaan_hero.png" alt="Pojok Baca project preview">
-                                    </div>
-                                    <div class="work-card-body">
+                                    <div class="work-card-copy">
                                         <span class="work-card-index">04</span>
                                         <h4 class="work-card-title">Pojok Baca</h4>
-                                        <p class="work-card-subtitle">Lead Android Dev · ML · Firebase</p>
-                                        <span class="work-card-cta">View project ↗</span>
+                                        <p class="work-card-subtitle">An Android library app using Firebase and machine learning to support book discovery, reviews, and admin workflows.</p>
+                                        <span class="work-card-tags">Android · Firebase · ML</span>
+                                    </div>
+                                    <div class="work-card-media">
+                                        <img src="assets/tamanbacaan_hero.png" alt="Pojok Baca project preview">
                                     </div>
                                 </a>
                             </article>
@@ -151,25 +181,31 @@
                 </section>
 
                 <section class="about-section-new" id="about">
-                    <!-- Portrait Container -->
+                    <div class="about-meta" aria-label="Profile details">
+                        <span>About / Profile</span>
+                        <span>CS student · Indonesia</span>
+                        <span>Web · ML · Android · Games</span>
+                    </div>
+
                     <div class="about-portrait" id="aboutPortrait">
-                        <!-- Portrait background color and actual image -->
                         <div class="portrait-bg"></div>
                         <img src="assets/ryann.JPG" alt="Ryann Chandiari">
                     </div>
-                    
-                    <!-- Single text layer with mix-blend-mode -->
+
                     <div class="about-text-blend" id="aboutTextBlend">
-                        <span class="about-word">I</span> <span class="about-word">love</span> <span class="about-word">to</span> <span class="about-word">inspire,</span> <span class="about-word">because</span> <span class="about-word">I</span> <span class="about-word">know</span><br>
-                        <span class="about-word">what</span> <span class="about-word">it's</span> <span class="about-word">like</span> <span class="about-word">to</span> <span class="about-word">be</span> <span class="about-word">inspired.</span><br>
-                        <span class="about-word">Seeing</span> <span class="about-word">design</span> <span class="about-word">work</span> <span class="about-word">and</span> <span class="about-word">having</span><br>
-                        <span class="about-word">fun,</span> <span class="about-word">that's</span> <span class="about-word">what</span> <span class="about-word">it's</span> <span class="about-word">all</span> <span class="about-word">about.</span>
+                        <span class="about-word">I</span> <span class="about-word">love</span> <span class="about-word">turning</span> <span class="about-word">technical</span><br>
+                        <span class="about-word">ideas</span> <span class="about-word">into</span> <span class="about-word">experiences</span> <span class="about-word">that</span><br>
+                        <span class="about-word">feel</span> <span class="about-word">clear,</span> <span class="about-word">useful,</span> <span class="about-word">and</span><br>
+                        <span class="about-word">a</span> <span class="about-word">little</span> <span class="about-word">unexpected.</span>
+                    </div>
+
+                    <div class="about-orbit" aria-hidden="true">
+                        <span></span>
                     </div>
                 </section>
             </div>
         </section>
 
-        <!-- New Minimalist Footer -->
         <footer class="footer-new">
             <div class="footer-grid">
                 <div class="footer-col">
@@ -178,26 +214,23 @@
                 </div>
                 <div class="footer-col">
                     <span class="footer-label">Menu</span>
-                    <a href="#" class="footer-link">Home</a>
-                    <a href="#content" class="footer-link">Work</a>
-                    <a href="#about" class="footer-link">About</a>
+                    <a href="#" class="footer-link" data-hover="Expand">Home</a>
+                    <a href="#work" class="footer-link" data-hover="Expand">Work</a>
+                    <a href="#about" class="footer-link" data-hover="Expand">About</a>
                 </div>
                 <div class="footer-col">
                     <span class="footer-label">Contact</span>
-                    <a href="https://www.linkedin.com/in/rynnchan" target="_blank" class="footer-link" data-hover="Expand">Linkedin</a>
-                    <a href="https://www.instagram.com/rynnchn_/" target="_blank" class="footer-link" data-hover="Expand">Instagram</a>
+                    <a href="https://www.linkedin.com/in/rynnchan" target="_blank" rel="noreferrer" class="footer-link" data-hover="Expand">LinkedIn</a>
+                    <a href="https://www.instagram.com/rynnchn_/" target="_blank" rel="noreferrer" class="footer-link" data-hover="Expand">Instagram</a>
                     <a href="mailto:ryann.chandiari@gmail.com" class="footer-link" data-hover="Expand">Email</a>
                 </div>
             </div>
         </footer>
+    </main>
 
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=cinematic-14"></script>
 </body>
 
 </html>
