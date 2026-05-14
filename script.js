@@ -178,41 +178,74 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 });
 
 function startPageMotion() {
-    gsap.set('.nav', { y: -24, opacity: 0 });
-    gsap.set('.hero-content > *', { y: 34, opacity: 0 });
-    gsap.set('.hero-bg-waves', { opacity: 0 });
-    gsap.set('.scroll-indicator', { y: 18, opacity: 0 });
+    const nav = document.querySelector('.nav');
+    const heroIntroTargets = document.querySelectorAll('.hero-content > *, .project-hero-content > *');
+    const heroBackgrounds = document.querySelectorAll('.hero-bg-waves, .nest-hero-bg');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const heroContent = document.querySelector('.hero-content, .project-hero-content');
+    const heroGrid = document.querySelector('.hero-grid');
+
+    if (nav) {
+        gsap.set(nav, { y: -24, opacity: 0 });
+    }
+
+    if (heroIntroTargets.length) {
+        gsap.set(heroIntroTargets, { y: 34, opacity: 0 });
+    }
+
+    if (heroBackgrounds.length) {
+        gsap.set(heroBackgrounds, { opacity: 0 });
+    }
+
+    if (scrollIndicator) {
+        gsap.set(scrollIndicator, { y: 18, opacity: 0 });
+    }
 
     const loadTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    loadTl
-        .to('.nav', { y: 0, opacity: 1, duration: 0.8, delay: 0.1 })
-        .to('.hero-bg-waves', { opacity: 1, duration: 1.25 }, '-=0.55')
-        .to('.hero-content > *', { y: 0, opacity: 1, duration: 0.95, stagger: 0.1 }, '-=0.65')
-        .to('.scroll-indicator', { y: 0, opacity: 1, duration: 0.8 }, '-=0.45');
 
-    gsap.to('.hero-content', {
-        scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        },
-        y: -80,
-        opacity: 0.18,
-        ease: 'none'
-    });
+    if (nav) {
+        loadTl.to(nav, { y: 0, opacity: 1, duration: 0.8, delay: 0.1 });
+    }
 
-    gsap.to('.hero-grid', {
-        scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        },
-        yPercent: 18,
-        xPercent: -4,
-        ease: 'none'
-    });
+    if (heroBackgrounds.length) {
+        loadTl.to(heroBackgrounds, { opacity: 1, duration: 1.25 }, '-=0.55');
+    }
+
+    if (heroIntroTargets.length) {
+        loadTl.to(heroIntroTargets, { y: 0, opacity: 1, duration: 0.95, stagger: 0.1 }, '-=0.65');
+    }
+
+    if (scrollIndicator) {
+        loadTl.to(scrollIndicator, { y: 0, opacity: 1, duration: 0.8 }, '-=0.45');
+    }
+
+    if (heroContent) {
+        gsap.to(heroContent, {
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            },
+            y: -80,
+            opacity: 0.18,
+            ease: 'none'
+        });
+    }
+
+    if (heroGrid) {
+        gsap.to(heroGrid, {
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            },
+            yPercent: 18,
+            xPercent: -4,
+            ease: 'none'
+        });
+    }
 
     gsap.utils.toArray('.section-intro, .section-header, .work-card, .about-portrait').forEach((element) => {
         gsap.from(element, {

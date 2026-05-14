@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nest - Ryann Chandiari</title>
+    <meta name="description" content="Nest is a Finder-native AI companion for macOS, built with Swift, AppKit, SwiftUI, and bring-your-own AI provider integrations.">
+    <link rel="stylesheet" href="style.css?v=cinematic-13">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .project-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .nest-hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.22), #000 94%),
+                radial-gradient(circle at 70% 42%, rgba(69, 141, 255, 0.24), transparent 32%),
+                radial-gradient(circle at 28% 62%, rgba(77, 243, 161, 0.12), transparent 26%),
+                url('assets/nest-hero.png') center / cover no-repeat;
+            animation: nestHeroDrift 34s ease-in-out infinite alternate;
+        }
+
+        .nest-hero-bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(circle at center, #000, transparent 76%);
+        }
+
+        .project-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .project-hero h1 {
+            font-size: clamp(5rem, 14vw, 15rem);
+            font-weight: 900;
+            letter-spacing: -0.09em;
+            line-height: 0.82;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 0 70px rgba(69, 141, 255, 0.32);
+        }
+
+        .project-kicker {
+            color: #a3f7b5;
+            font-family: var(--font-mono);
+            font-size: clamp(0.78rem, 1vw, 1rem);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-top: 22px;
+        }
+
+        .project-details {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 64px 40px;
+            display: grid;
+            grid-template-columns: 1fr 2.2fr;
+            gap: 60px;
+        }
+
+        .meta-sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+
+        .meta-group {
+            margin-bottom: 36px;
+        }
+
+        .meta-group h4,
+        .section-label {
+            color: #a3f7b5;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-bottom: 10px;
+        }
+
+        .meta-group p,
+        .meta-group a {
+            font-size: 1.08rem;
+            color: #ffffff;
+            text-decoration: none;
+            line-height: 1.5;
+        }
+
+        .tag-row,
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(163, 247, 181, 0.12);
+            border: 1px solid rgba(163, 247, 181, 0.28);
+            color: #a3f7b5;
+            border-radius: 999px;
+            padding: 5px 13px;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .cta-row {
+            flex-direction: column;
+            margin-top: 8px;
+        }
+
+        .cta-btn,
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cta-btn {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 650;
+        }
+
+        .cta-btn.primary {
+            background: #a3f7b5;
+            color: #000;
+        }
+
+        .cta-btn.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            margin-bottom: 50px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+            padding-bottom: 4px;
+        }
+
+        .description-group {
+            margin-bottom: 58px;
+        }
+
+        .description-group h3 {
+            font-size: clamp(1.75rem, 2.5vw, 2.55rem);
+            line-height: 1.06;
+            letter-spacing: -0.04em;
+            margin: 10px 0 18px;
+            color: #ffffff;
+        }
+
+        .description-group p {
+            font-size: 1.08rem;
+            line-height: 1.75;
+            color: #c8c8c8;
+            margin-bottom: 16px;
+        }
+
+        .project-image-full {
+            width: 100%;
+            border-radius: 18px;
+            margin: 0 0 44px;
+            box-shadow: 0 22px 70px rgba(0, 0, 0, 0.62);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .feature-card h4 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #a6a6a6;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.52);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 8px 0 52px;
+        }
+
+        @keyframes nestHeroDrift {
+            from {
+                transform: scale(1.02) translate3d(-1%, 0, 0);
+            }
+            to {
+                transform: scale(1.08) translate3d(1.5%, -1%, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-details,
+            .feature-grid,
+            .project-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .project-details {
+                padding: 44px 22px;
+            }
+
+            .meta-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="glowing-border" aria-hidden="true"></div>
+
+    <nav class="sidebar" id="sidebar" aria-label="Project menu">
+        <div class="sidebar-links">
+            <a href="index.html" class="sidebar-link" data-hover="Expand">Home</a>
+            <a href="index.html#work" class="sidebar-link" data-hover="Expand">Work</a>
+        </div>
+    </nav>
+
+    <button class="menu-backdrop" id="menuBackdrop" type="button" aria-label="Close menu"></button>
+
+    <header class="nav">
+        <button class="menu-btn" data-hover="Expand" id="menuToggle" type="button" aria-controls="sidebar" aria-expanded="false">
+            <svg class="hamburger-icon" id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="8" x2="21" y2="8"></line>
+                <line x1="3" y1="16" x2="21" y2="16"></line>
+            </svg>
+            <span id="menuText">Menu</span>
+        </button>
+        <a href="index.html" class="logo" data-hover="Expand">R.C.</a>
+    </header>
+
+    <main class="smooth-scroll-wrapper" id="pageWrapper">
+        <section class="hero project-hero">
+            <div class="nest-hero-bg" aria-hidden="true"></div>
+            <div class="project-hero-content">
+                <h1>Nest</h1>
+                <p class="project-kicker">2026 · macOS App · AI Agent</p>
+            </div>
+            <div class="scroll-indicator" style="z-index:2;">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <section class="content-reveal">
+            <div class="white-container" style="background-color:#111;color:#fff;min-height:100vh;padding-top:50px;">
+                <div class="project-details">
+                    <aside class="meta-sidebar">
+                        <a href="index.html#work" class="back-link" data-hover="Expand">← Back to Projects</a>
+
+                        <div class="meta-group">
+                            <h4>Project Title</h4>
+                            <p>Nest</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Year</h4>
+                            <p>2026</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Role</h4>
+                            <p>macOS App Developer</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Tools</h4>
+                            <div class="tag-row">
+                                <span class="tag">Swift</span>
+                                <span class="tag">AppKit</span>
+                                <span class="tag">SwiftUI</span>
+                                <span class="tag">AI APIs</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Links</h4>
+                            <div class="cta-row">
+                                <a href="https://github.com/HyperOrb/Nest" target="_blank" rel="noreferrer" class="cta-btn primary" data-hover="Expand">View on GitHub</a>
+                                <a href="https://youtu.be/depebDj8i74" target="_blank" rel="noreferrer" class="cta-btn secondary" data-hover="Expand">Watch demo</a>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="content-main">
+                        <img src="assets/nest-hero.png" alt="Nest command bar docked beneath Finder" class="project-image-full">
+
+                        <div class="description-group">
+                            <span class="section-label">Overview</span>
+                            <h3>A Finder-native AI companion for macOS.</h3>
+                            <p>Nest is a native macOS AI agent that lives directly inside Finder. Instead of copying files into a browser or switching tools, you select files or folders in Finder, type what you want, and Nest turns that intent into useful local actions.</p>
+                            <p>The app docks beneath the active Finder window, reads the current selection, talks to your chosen AI provider, and presents safe commands or direct answers in a lightweight interface that feels part of the desktop.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Experience</span>
+                            <h3>Command bar, previews, answers, and activity in one flow.</h3>
+                            <div class="feature-grid">
+                                <div class="feature-card">
+                                    <h4>Finder-native command bar</h4>
+                                    <p>Tracks the active Finder window and keeps the input surface docked where the file context already lives.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>Bring your own AI</h4>
+                                    <p>Supports Gemini, OpenRouter, OpenAI-compatible APIs, and Ollama for local/offline workflows.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>Safe command previews</h4>
+                                    <p>Harmless tasks can run quickly, while risky or destructive operations require an explicit preview and approval.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>Activity and onboarding</h4>
+                                    <p>Settings, first-run onboarding, permission checks, and activity logs make the app easier to trust and revisit.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Screenshots</span>
+                            <h3>Built around real desktop context.</h3>
+                            <div class="project-gallery">
+                                <img src="assets/nest-1.png" alt="Nest AI provider and settings interface" class="gallery-image" data-hover="Expand">
+                                <img src="assets/nest-2.png" alt="Nest command preview interface" class="gallery-image" data-hover="Expand">
+                                <img src="assets/nest-3.png" alt="Nest activity log and recent commands" class="gallery-image" data-hover="Expand">
+                                <img src="assets/nest-4.png" alt="Nest onboarding and permissions flow" class="gallery-image" data-hover="Expand">
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Build</span>
+                            <h3>Translating plain language into local file actions.</h3>
+                            <p>The core challenge was making a desktop AI tool feel safe enough to use on real files. I built the app around Finder state, provider configuration, command translation, command preview windows, answer cards, instant actions, and an auto-run policy that separates harmless commands from operations that need approval.</p>
+                            <p>Nest also integrates optional command-line tools like ImageMagick, FFmpeg, Pandoc, Poppler, and QPDF without installing anything behind the user’s back. If a tool is missing, the app explains what is needed and lets the user stay in control.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Reflection</span>
+                            <h3>Designing trust into a powerful tool.</h3>
+                            <p>This project pushed me to think beyond “can the AI do it?” and into “should the app run this, preview this, or explain this?” The most important part of Nest is the boundary between natural-language convenience and local-file safety.</p>
+                            <p>Building it helped me sharpen native macOS development, AppKit window behavior, permission flows, provider integrations, and the product design of AI tools that act on a user’s real environment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js?v=cinematic-15"></script>
+</body>
+
+</html>
