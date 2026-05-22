@@ -770,9 +770,31 @@ body.menu-open .menu-btn {
 .work-card-tags {
     font-family: var(--font-mono);
     font-size: 12px;
+    line-height: 1.65;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.46);
+}
+
+.tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(163, 247, 181, 0.3);
+    border-radius: 999px;
+    background: rgba(163, 247, 181, 0.12);
+    color: #a3f7b5;
+    padding: 4px 13px;
+    font-size: 0.76rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .work-card-title {
@@ -906,11 +928,11 @@ body.menu-open .menu-btn {
     z-index: 4;
     display: grid;
     gap: 12px;
-    width: 260px;
+    width: min(360px, 34vw);
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.35;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.54);
 }
