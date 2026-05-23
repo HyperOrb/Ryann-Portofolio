@@ -247,7 +247,7 @@ function startPageMotion() {
         });
     }
 
-    gsap.utils.toArray('.section-intro, .section-header, .work-card, .about-portrait').forEach((element) => {
+    gsap.utils.toArray('.section-intro, .skills-heading, .skill-group, .section-header, .work-card, .about-portrait').forEach((element) => {
         gsap.from(element, {
             scrollTrigger: {
                 trigger: element,
