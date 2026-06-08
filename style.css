@@ -893,6 +893,7 @@ body.menu-open .menu-btn {
 .work-section {
     margin: 0 auto 150px;
     min-height: auto;
+    scroll-margin-top: 110px;
 }
 
 .work-stack {
@@ -1022,6 +1023,31 @@ body.menu-open .menu-btn {
 .nest-media img {
     object-position: center top;
     filter: saturate(1.04) contrast(1.06) brightness(0.82);
+}
+
+.pip-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 23% 22%, rgba(163, 247, 181, 0.22), transparent 30%),
+        radial-gradient(circle at 78% 78%, rgba(69, 141, 255, 0.2), transparent 28%),
+        #05070a;
+}
+
+.pip-media img {
+    width: min(52%, 320px);
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center center;
+    transform: none;
+    filter: drop-shadow(0 28px 58px rgba(0, 0, 0, 0.48));
+}
+
+.work-card-link:hover .pip-media img {
+    transform: scale(1.04);
+    filter: drop-shadow(0 34px 68px rgba(0, 0, 0, 0.56));
 }
 
 .cardcast-media {

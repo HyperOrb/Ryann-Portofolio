@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pip - Ryann Chandiari</title>
+    <meta name="description" content="Pip is a macOS menu bar AI companion that listens to tasks, reasons over screen context, runs local tools, and points at UI elements.">
+    <link rel="stylesheet" href="style.css?v=cinematic-15">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .project-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .pip-hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.2), #000 94%),
+                radial-gradient(circle at 72% 38%, rgba(163, 247, 181, 0.22), transparent 30%),
+                radial-gradient(circle at 28% 64%, rgba(69, 141, 255, 0.2), transparent 28%),
+                url('assets/pip-demo.gif') center / cover no-repeat;
+            animation: pipHeroDrift 34s ease-in-out infinite alternate;
+        }
+
+        .pip-hero-bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(circle at center, #000, transparent 76%);
+        }
+
+        .project-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .project-hero h1 {
+            font-size: clamp(5rem, 14vw, 15rem);
+            font-weight: 900;
+            letter-spacing: 0;
+            line-height: 0.82;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 0 70px rgba(163, 247, 181, 0.3);
+        }
+
+        .project-kicker {
+            color: #a3f7b5;
+            font-family: var(--font-mono);
+            font-size: clamp(0.78rem, 1vw, 1rem);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-top: 22px;
+        }
+
+        .project-details {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 64px 40px;
+            display: grid;
+            grid-template-columns: 1fr 2.2fr;
+            gap: 60px;
+        }
+
+        .meta-sidebar {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+
+        .meta-group {
+            margin-bottom: 36px;
+        }
+
+        .meta-group h4,
+        .section-label {
+            color: #a3f7b5;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-bottom: 10px;
+        }
+
+        .meta-group p,
+        .meta-group a {
+            font-size: 1.08rem;
+            color: #ffffff;
+            text-decoration: none;
+            line-height: 1.5;
+        }
+
+        .tag-row,
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(163, 247, 181, 0.12);
+            border: 1px solid rgba(163, 247, 181, 0.28);
+            color: #a3f7b5;
+            border-radius: 999px;
+            padding: 5px 13px;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .cta-row {
+            flex-direction: column;
+            margin-top: 8px;
+        }
+
+        .cta-btn,
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .cta-btn {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 650;
+        }
+
+        .cta-btn.primary {
+            background: #a3f7b5;
+            color: #000;
+        }
+
+        .cta-btn.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            margin-bottom: 50px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+            padding-bottom: 4px;
+        }
+
+        .description-group {
+            margin-bottom: 58px;
+        }
+
+        .description-group h3 {
+            font-size: clamp(1.75rem, 2.5vw, 2.55rem);
+            line-height: 1.06;
+            letter-spacing: 0;
+            margin: 10px 0 18px;
+            color: #ffffff;
+        }
+
+        .description-group p {
+            font-size: 1.08rem;
+            line-height: 1.75;
+            color: #c8c8c8;
+            margin-bottom: 16px;
+        }
+
+        .project-image-full {
+            width: 100%;
+            border-radius: 18px;
+            margin: 0 0 44px;
+            box-shadow: 0 22px 70px rgba(0, 0, 0, 0.62);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .feature-card h4 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #a6a6a6;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.52);
+        }
+
+        .demo-card {
+            min-height: 100%;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background:
+                linear-gradient(135deg, rgba(163, 247, 181, 0.18), rgba(69, 141, 255, 0.16)),
+                rgba(255, 255, 255, 0.035);
+        }
+
+        .demo-card span {
+            color: #a3f7b5;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .demo-card strong {
+            display: block;
+            margin: 12px 0 10px;
+            color: #ffffff;
+            font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+            line-height: 1.05;
+        }
+
+        .demo-card p {
+            max-width: 420px;
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.55;
+            margin: 0 0 20px;
+        }
+
+        .demo-card a {
+            align-self: flex-start;
+            color: #000;
+            background: #a3f7b5;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 8px 0 52px;
+        }
+
+        @keyframes pipHeroDrift {
+            from {
+                transform: scale(1.02) translate3d(-1%, 0, 0);
+            }
+            to {
+                transform: scale(1.08) translate3d(1.5%, -1%, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-details,
+            .feature-grid,
+            .project-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .project-details {
+                padding: 44px 22px;
+            }
+
+            .meta-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="glowing-border" aria-hidden="true"></div>
+
+    <nav class="sidebar" id="sidebar" aria-label="Project menu">
+        <div class="sidebar-links">
+            <a href="index.html" class="sidebar-link" data-hover="Expand">Home</a>
+            <a href="index.html#work" class="sidebar-link" data-hover="Expand">Work</a>
+        </div>
+    </nav>
+
+    <button class="menu-backdrop" id="menuBackdrop" type="button" aria-label="Close menu"></button>
+
+    <header class="nav">
+        <button class="menu-btn" data-hover="Expand" id="menuToggle" type="button" aria-controls="sidebar" aria-expanded="false">
+            <svg class="hamburger-icon" id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="8" x2="21" y2="8"></line>
+                <line x1="3" y1="16" x2="21" y2="16"></line>
+            </svg>
+            <span id="menuText">Menu</span>
+        </button>
+        <a href="index.html" class="logo" data-hover="Expand">R.C.</a>
+    </header>
+
+    <main class="smooth-scroll-wrapper" id="pageWrapper">
+        <section class="hero project-hero">
+            <div class="pip-hero-bg" aria-hidden="true"></div>
+            <div class="project-hero-content">
+                <h1>Pip</h1>
+                <p class="project-kicker">OpenClaw Agenthon 2026 · macOS App · Local AI Agent</p>
+            </div>
+            <div class="scroll-indicator" style="z-index:2;">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <section class="content-reveal">
+            <div class="white-container" style="background-color:#111;color:#fff;min-height:100vh;padding-top:50px;">
+                <div class="project-details">
+                    <aside class="meta-sidebar">
+                        <a href="index.html#work" class="back-link" data-hover="Expand">← Back to Projects</a>
+
+                        <div class="meta-group">
+                            <h4>Project Title</h4>
+                            <p>Pip</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Created</h4>
+                            <p>2026</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Role</h4>
+                            <p>Solo Developer &amp; Project Lead</p>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Technical Focus</h4>
+                            <div class="tag-row">
+                                <span class="tag">Agentic AI Systems</span>
+                                <span class="tag">Agent Orchestration</span>
+                                <span class="tag">Local Multimodal AI</span>
+                                <span class="tag">Native macOS</span>
+                                <span class="tag">UI Automation</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-group">
+                            <h4>Links</h4>
+                            <div class="cta-row">
+                                <a href="https://github.com/HyperOrb/OpenClaw2026_Ryann_Pip" target="_blank" rel="noreferrer" class="cta-btn primary" data-hover="Expand">View on GitHub</a>
+                                <a href="https://youtu.be/fQXdMJfcYNU" target="_blank" rel="noreferrer" class="cta-btn secondary" data-hover="Expand">Watch demo</a>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="content-main">
+                        <div class="description-group">
+                            <span class="section-label">Overview</span>
+                            <h3>A macOS Agentic companion that can see, reason, act, and respond.</h3>
+                            <p>Pip is a native macOS AI agent built for OpenClaw Agenthon 2026. It lives quietly in the menu bar, listens through push-to-talk, captures screen context when asked, reasons locally, and turns tasks into visible desktop actions.</p>
+                            <p>The goal was to make an AI assistant feel present on the desktop without hiding what it is doing. Pip logs its agent steps, asks before risky actions, can point at UI elements, and speaks back using local macOS speech.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Experience</span>
+                            <h3>Designed around a visible agent loop.</h3>
+                            <div class="feature-grid">
+                                <div class="feature-card">
+                                    <h4>Menu bar companion</h4>
+                                    <p>Runs without a Dock icon and opens a focused companion panel for voice tasks, status, model selection, and agent progress.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>Push-to-talk workflow</h4>
+                                    <p>Uses a global Control + Option shortcut, Apple Speech transcription, and macOS speech synthesis for a local voice loop.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>Screen-aware reasoning</h4>
+                                    <p>Captures screen context with ScreenCaptureKit during interactions, then sends the task and visual context to a local Ollama model.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>Local tools with confirmation</h4>
+                                    <p>Can open apps or sites, organize Desktop files, create notes and reminders, run browser tasks, and export research summaries with user approval where needed.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Screenshots</span>
+                            <h3>Built to make agent behavior visible.</h3>
+                            <div class="project-gallery">
+                                <img src="assets/pip-demo.gif" alt="Animated Pip paw companion following the cursor" class="gallery-image" data-hover="Expand">
+                                <div class="gallery-image demo-card" data-hover="Expand">
+                                    <span>Demo video</span>
+                                    <strong>Pip in motion</strong>
+                                    <p>Watch the full demo to see the companion behavior, desktop interaction, and agent loop together.</p>
+                                    <a href="https://youtu.be/fQXdMJfcYNU" target="_blank" rel="noreferrer">Open YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Build</span>
+                            <h3>Connecting speech, screen context, local models, and desktop automation.</h3>
+                            <p>The app combines a SwiftUI and AppKit shell with native macOS services: Apple Speech for transcription, ScreenCaptureKit for screenshots, Accessibility and keyboard events for UI operation, and NSSpeechSynthesizer for local voice feedback.</p>
+                            <p>The reasoning loop uses Ollama locally by default, with support for stronger local vision models when available. A small Node.js sidecar handles browser-oriented automation paths, while native Swift executors manage local tasks and confirmation flows.</p>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="description-group">
+                            <span class="section-label">Reflection</span>
+                            <h3>Making autonomy legible instead of mysterious.</h3>
+                            <p>Pip helped me explore what it means for an agent to operate on a real desktop while still being understandable. The most important design constraint was not just what the agent can do, but how clearly it shows each step before taking action.</p>
+                            <p>The project sharpened my macOS development, screen-capture workflows, local AI integration, voice interfaces, tool execution boundaries, and the product design of AI systems that need trust as much as capability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js?v=cinematic-15"></script>
+</body>
+
+</html>
