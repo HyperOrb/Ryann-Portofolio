@@ -3,3 +3,6 @@
 graphify-out/
 node_modules/
 **/APK/
+
+.playwright-cli/
+output/playwright/
